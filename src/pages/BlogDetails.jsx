@@ -30,7 +30,7 @@ export default function BlogDetails() {
         </a>
         <a aria-label="Copy Link" className="w-10 h-10 rounded-full bg-surface-dark border border-white/10 flex items-center justify-center text-gray-400 hover:text-secondary hover:border-secondary transition-all hover:scale-110" href="#">
           <span className="material-symbols-outlined text-lg">link</span>
-        </a>
+        </a> 
       </aside>
 
       <main className="relative pt-32 pb-24">

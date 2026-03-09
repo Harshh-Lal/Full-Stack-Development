@@ -1,3 +1,6 @@
+import valoImg from '../assets/valo.png';
+import mouseImg from '../assets/mouse.png';
+
 const blogPosts = [
   {
     id: "top-5-meta-strategies-valorant",
@@ -7,7 +10,7 @@ const blogPosts = [
     categoryColor: "primary",
     date: "Oct 24, 2023",
     readTime: "6 min read",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBmcW-Rhdq3nKbpifaDM25ehBBRBLpXfdmI6qTHI29SUDu3bhK9qd2F_dw2pKQdgBPZlEiaH-w5127xoPB1zD5m4B6HLtm9GV7igURlAURrqxhLm8C79bJrPvYAJYQzsNW5aqTVNu_dwD2kEVJ-O2UR2763g7E8gm3VYlA94zJTp-7EAqeuUG5hzNo44_TOqiiO3c46eSbH7so3KkZc3BkTB7ITxm4a9t5yqOJ753PgbO_Rm0_o-B51LmdWAhjID45RCN43srwhw7Q",
+    image: valoImg,
     author: "Coach Jace",
     authorRole: "Head Analyst",
     authorAvatar: "https://lh3.googleusercontent.com/aida-public/AB6AXuBmcW-Rhdq3nKbpifaDM25ehBBRBLpXfdmI6qTHI29SUDu3bhK9qd2F_dw2pKQdgBPZlEiaH-w5127xoPB1zD5m4B6HLtm9GV7igURlAURrqxhLm8C79bJrPvYAJYQzsNW5aqTVNu_dwD2kEVJ-O2UR2763g7E8gm3VYlA94zJTp-7EAqeuUG5hzNo44_TOqiiO3c46eSbH7so3KkZc3BkTB7ITxm4a9t5yqOJ753PgbO_Rm0_o-B51LmdWAhjID45RCN43srwhw7Q",
@@ -64,10 +67,10 @@ const blogPosts = [
     title: "Is 8000Hz Polling Rate Worth It?",
     excerpt: "We tested the latest ultra-high polling rate mice to see if they actually give you a competitive edge or if it's just marketing hype.",
     category: "Gear Review",
-    categoryColor: "secondary",
+    categoryColor: "red",
     date: "Oct 20, 2023",
     readTime: "4 min read",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuC3frtKvMp1dVxYcwtTn6LT-3piAAyLcCs6I2acwbEKqHIjQc5LQ8KHGWa8u7a3_xw40MiYQ9MEFxNinZm7zCFu1PbmSURl_FrcdQxnpsonNco0lUVTqh5HAvGaPRksScUTBWPKvo_qPMMvmhtXrMC5zfsUoVG4g2mSm3KUBhnqidEj1v0w0Cau0HgHbiTdCC2nPVlcEZY-vvB4Dh6tzCcf6LOr15ONRTJqjAosOt1ATnZ7AnVR7SsJgCw0z5Q0v882dC1gfqnfvOY",
+    image: mouseImg,
     author: "TechWiz",
     authorRole: "Gear Specialist",
     authorAvatar: "https://lh3.googleusercontent.com/aida-public/AB6AXuCSjqxnA3b_rtagb69N74LdwAV-_tTETqI67WsiuS-_4jOTxLd9mpPGyy0WoIDF1h2_9LBkkglolPVk6DTrox64J9vlA4T2Bi8IEq2Hpr6IvQ7gOgQKAzNmuJCQIKQnhAlXazrXYTqc6DVZx-T4thMys2QqncDVTR1WfSOzoOO2EkD5VZHxVNcFYhD8rqaHPOT3vRu5LPAzXRI_msvx6e5x7WxTZW7iTYyud-GuXS-bHQbjag3uviB2vfvZL1XI60nZNDTTRJsuY_o",
@@ -107,7 +110,7 @@ const blogPosts = [
     categoryColor: "blue",
     date: "Oct 18, 2023",
     readTime: "8 min read",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuD3iJFDQLQGJaDYlyESSrQYDe8vKxaI5fL2tj5vIQw3EWpDpsQK-rpaNU5xSt5eRil3y-WQiYI7EJkOwHyfEjqgNfChn0a3IrcnaF-jAXdWWoTKq9x-zdkGsIw2DTCc9IhNDg0a6-QwwqTorg1VtJRplHDh0MeRka9K63eX-Q70f1cnib_zSZeN_yPdkErpShS-oe62uJQ6-VDcPeAJuEhOSTCbSPXW_H5NseJSHwHbv2jW9QlfjIbVRRoUPCmk9gAAx1YW3WBoYgM",
+    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBXJ6YyzbiepQBwWVtfweeD6bBSAgoQN7UT__B2vodKYeFkDcggn9xqjS0kMAvhRMbl8JSaxW3RCAeDentgA_p0zFb6vLSJDy1PNsr2p1MbXwHkqcgIiQ0YL7dEmbaxTO1009BEyXBwyFAEthWK2OGP0Qlob8wIdhzWcJRhEaz7aRbIN6y9JQAqZ3hw94KPPJ2mEUET7LMtCqTHLJ51kdNrxPu1p39QaDcaMchnQ-EkUIoV8X426jZ8I3DADngeJqADJc2o1q27YKo",
     author: "ShotCaller",
     authorRole: "Team Coach",
     authorAvatar: "https://lh3.googleusercontent.com/aida-public/AB6AXuBfaWdwtXTHD0zb4GI60Rbwa4rODmJwJDenz9LmMuxJXpCKRrJkSQ_5zAplmtm0A8w-EJUIMAHaBbIXNqUeol-vJCpVgqRA9k_ElH8V9pOngJdfv98xe6CZhYxEoWMg7L1gGIf_38NAolBOoorqxR7p5KS-PGXfqiqDXTYH9aFuaTjKnOrYabtEjNW0nDl16m9KPYp1ZjAM1arOHWtCj_9pcQL_00SdIWWRh3SXKb2jZAwxoba_rqMK-rVhvSad7aHlp3o12hgV0DA",
@@ -146,7 +149,7 @@ const blogPosts = [
     categoryColor: "purple",
     date: "Oct 15, 2023",
     readTime: "3 min read",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBXJ6YyzbiepQBwWVtfweeD6bBSAgoQN7UT__B2vodKYeFkDcggn9xqjS0kMAvhRMbl8JSaxW3RCAeDentgA_p0zFb6vLSJDy1PNsr2p1MbXwHkqcgIiQ0YL7dEmbaxTO1009BEyXBwyFAEthWK2OGP0Qlob8wIdhzWcJRhEaz7aRbIN6y9JQAqZ3hw94KPPJ2mEUET7LMtCqTHLJ51kdNrxPu1p39QaDcaMchnQ-EkUIoV8X426jZ8I3DADngeJqADJc2o1q27YKo",
+    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuD3iJFDQLQGJaDYlyESSrQYDe8vKxaI5fL2tj5vIQw3EWpDpsQK-rpaNU5xSt5eRil3y-WQiYI7EJkOwHyfEjqgNfChn0a3IrcnaF-jAXdWWoTKq9x-zdkGsIw2DTCc9IhNDg0a6-QwwqTorg1VtJRplHDh0MeRka9K63eX-Q70f1cnib_zSZeN_yPdkErpShS-oe62uJQ6-VDcPeAJuEhOSTCbSPXW_H5NseJSHwHbv2jW9QlfjIbVRRoUPCmk9gAAx1YW3WBoYgM",
     author: "EventsTeam",
     authorRole: "Tournament Organizer",
     authorAvatar: "https://lh3.googleusercontent.com/aida-public/AB6AXuBmcW-Rhdq3nKbpifaDM25ehBBRBLpXfdmI6qTHI29SUDu3bhK9qd2F_dw2pKQdgBPZlEiaH-w5127xoPB1zD5m4B6HLtm9GV7igURlAURrqxhLm8C79bJrPvYAJYQzsNW5aqTVNu_dwD2kEVJ-O2UR2763g7E8gm3VYlA94zJTp-7EAqeuUG5hzNo44_TOqiiO3c46eSbH7so3KkZc3BkTB7ITxm4a9t5yqOJ753PgbO_Rm0_o-B51LmdWAhjID45RCN43srwhw7Q",

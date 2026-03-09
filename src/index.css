@@ -107,6 +107,41 @@
   text-shadow: 0 0 20px rgba(13, 242, 89, 0.3);
 }
 
+/* ─── ASCEND TO cursor mask effect ─── */
+.ascend-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.ascend-base {
+  background: linear-gradient(to bottom, #0df259 0%, #059669 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 20px rgba(13, 242, 89, 0.3);
+}
+
+.ascend-mask {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, #ffffff 0%, #4e4e4e 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  mask-image: url('/mask.svg');
+  -webkit-mask-image: url('/mask.svg');
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+  mask-size: var(--mask-size, 40px);
+  -webkit-mask-size: var(--mask-size, 40px);
+  mask-position: var(--mask-x, -9999px) var(--mask-y, -9999px);
+  -webkit-mask-position: var(--mask-x, -9999px) var(--mask-y, -9999px);
+  transition: mask-size 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              -webkit-mask-size 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  z-index: 1;
+}
+
 /* ─── GOD MODE cursor mask effect ─── */
 .godmode-wrapper {
   position: relative;

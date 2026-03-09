@@ -70,6 +70,7 @@ export default function Home() {
     const featuredPosts = blogPosts.slice(0, 3);
     const heroRef = useRef(null);
     const godmodeRef = useRef(null);
+    const ascendRef = useRef(null);
     const cursorRef = useRef(null);
     const [isOverGodmode, setIsOverGodmode] = useState(false);
     const [formSubmitted, setFormSubmitted] = useState(false);
@@ -95,6 +96,18 @@ export default function Home() {
             godmode.style.setProperty('--mask-x', `${mx}px`);
             godmode.style.setProperty('--mask-y', `${my}px`);
             godmode.style.setProperty('--mask-size', `${maskSize}px`);
+        }
+
+        // Update mask on ASCEND TO text
+        const ascend = ascendRef.current;
+        if (ascend) {
+            const asRect = ascend.getBoundingClientRect();
+            const maskSize = isOverGodmode ? 400 : 40;
+            const mx = e.clientX - asRect.left - maskSize / 2;
+            const my = e.clientY - asRect.top - maskSize / 2;
+            ascend.style.setProperty('--mask-x', `${mx}px`);
+            ascend.style.setProperty('--mask-y', `${my}px`);
+            ascend.style.setProperty('--mask-size', `${maskSize}px`);
         }
     }, [isOverGodmode]);
 
@@ -130,7 +143,15 @@ export default function Home() {
                         <span className="text-xs font-medium tracking-widest uppercase text-white">Next Gen Gaming Facility</span>
                     </div>
                     <h1 className="text-6xl md:text-8xl lg:text-[10rem] font-black tracking-tighter mb-6 leading-none">
-                        <span className="text-neon-gradient">ASCEND TO</span> <br />
+                        <span
+                            ref={ascendRef}
+                            className="ascend-wrapper"
+                            onMouseEnter={handleGodmodeEnter}
+                            onMouseLeave={handleGodmodeLeave}
+                        >
+                            <span className="ascend-base">ASCEND TO</span>
+                            <span className="ascend-mask" aria-hidden="true">ASCEND TO</span>
+                        </span> <br />
                         <span
                             ref={godmodeRef}
                             className="godmode-wrapper"
