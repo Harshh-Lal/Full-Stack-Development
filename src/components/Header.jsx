@@ -31,9 +31,6 @@ export default function Header() {
           >
             Home
           </Link>
-          <a className="text-sm font-medium text-gray-300 hover:text-primary transition-colors uppercase tracking-wide" href="#tech">
-            The Tech
-          </a>
           <Link
             to="/blogs"
             className={`text-sm font-medium transition-colors uppercase tracking-wide ${
@@ -54,9 +51,16 @@ export default function Header() {
           >
             Gallery
           </Link>
-          <a className="text-sm font-medium text-gray-300 hover:text-primary transition-colors uppercase tracking-wide" href="#about">
+          <Link
+            to="/about"
+            className={`text-sm font-medium transition-colors uppercase tracking-wide ${
+              isActive('/about')
+                ? 'text-primary font-bold border-b-2 border-primary pb-0.5'
+                : 'text-gray-300 hover:text-primary'
+            }`}
+          >
             About
-          </a>
+          </Link>
         </nav>
 
         {/* Status */}

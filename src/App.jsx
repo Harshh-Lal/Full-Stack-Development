@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import Blogs from './pages/Blogs';
 import BlogDetails from './pages/BlogDetails';
 import Gallery from './pages/Gallery';
+import About from './pages/About';
 import ScrollToTop from './components/ScrollToTop';
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/blog/:id" element={<BlogDetails />} />
         <Route path="/gallery" element={<Gallery />} />
+        <Route path="/about" element={<About />} />
       </Routes>
       <Footer />
     </Router>
