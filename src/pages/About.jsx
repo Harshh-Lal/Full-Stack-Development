@@ -140,8 +140,8 @@ export default function About() {
             className="h-105 md:h-125"
           >
             <HoverMaskReveal
-              baseImage="/ab_bg.png"
-              revealImage="/image.png"
+              baseImage="/image.png"
+              revealImage="/color_controller.png"
               title="Inside The Arena"
               className="h-full"
               revealRadius={185}
