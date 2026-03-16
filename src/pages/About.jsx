@@ -79,7 +79,7 @@ const faqs = [
 ];
 
 export default function About() {
-  const [openIndex, setOpenIndex] = useState(0);
+  const [openIndex, setOpenIndex] = useState(-1);
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 120,
@@ -137,7 +137,7 @@ export default function About() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="h-[420px] md:h-[500px]"
+            className="h-105 md:h-125"
           >
             <HoverMaskReveal
               baseImage="/ab_bg.png"
@@ -296,20 +296,19 @@ export default function About() {
                   transition={{ duration: 0.35, delay: index * 0.06 }}
                   className="rounded-xl border border-white/10 bg-card-dark/80 overflow-hidden"
                 >
-                  <button
-                    type="button"
-                    onClick={() => setOpenIndex(isOpen ? -1 : index)}
-                    className="w-full px-6 py-5 text-left flex items-center justify-between hover:bg-white/5 transition-colors"
-                  >
+                  <div className="w-full px-6 py-5 text-left flex items-center justify-between hover:bg-white/5 transition-colors">
                     <span className="font-semibold text-lg">{item.q}</span>
-                    <motion.span
+                    <motion.button
+                      type="button"
+                      onClick={() => setOpenIndex(isOpen ? -1 : index)}
+                      aria-label={`${isOpen ? 'Close' : 'Open'} FAQ: ${item.q}`}
                       animate={{ rotate: isOpen ? 45 : 0 }}
                       transition={{ duration: 0.2 }}
                       className="text-primary text-3xl leading-none"
                     >
                       +
-                    </motion.span>
-                  </button>
+                    </motion.button>
+                  </div>
 
                   <AnimatePresence initial={false}>
                     {isOpen && (
@@ -319,7 +318,7 @@ export default function About() {
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.3, ease: 'easeInOut' }}
                       >
-                        <div className="px-6 pb-6 text-gray-300 leading-relaxed">{item.a}</div>
+                        <div className="px-6 pb-6 py-3 text-gray-300 leading-relaxed">{item.a}</div>
                       </motion.div>
                     )}
                   </AnimatePresence>
