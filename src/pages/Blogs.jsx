@@ -21,7 +21,7 @@ export default function Blogs() {
     : blogPosts.filter(p => p.category.toLowerCase().includes(activeFilter.toLowerCase()));
 
   return (
-    <main className="relative pt-32 pb-24">
+    <main className="relative pt-24 sm:pt-32 pb-24">
       {/* Background effects */}
       <div className="fixed inset-0 z-0 pointer-events-none">
         <div className="absolute inset-0 bg-bg-dark"></div>
@@ -47,11 +47,10 @@ export default function Blogs() {
             <button
               key={filter}
               onClick={() => setActiveFilter(filter)}
-              className={`filter-chip px-6 py-2 rounded-full border text-sm font-bold uppercase tracking-wide transition-all bg-surface-dark ${
-                activeFilter === filter
-                  ? 'active'
-                  : 'border-white/10 text-gray-400 hover:border-primary hover:text-primary'
-              }`}
+              className={`filter-chip px-6 py-2 rounded-full border text-sm font-bold uppercase tracking-wide transition-all bg-surface-dark ${activeFilter === filter
+                ? 'active'
+                : 'border-white/10 text-gray-400 hover:border-primary hover:text-primary'
+                }`}
             >
               {filter}
             </button>
@@ -59,14 +58,14 @@ export default function Blogs() {
         </div>
 
         {/* Blog Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
           {filteredPosts.map((post) => {
             const colors = categoryColorMap[post.categoryColor] || categoryColorMap.primary;
             return (
               <Link to={`/blog/${post.id}`} key={post.id}>
-                <article className="group relative h-112.5 rounded-xl overflow-hidden bg-card-dark neon-border blog-card-hover cursor-pointer">
+                <article className="group relative h-64 sm:h-80 md:h-[450px] rounded-xl overflow-hidden bg-card-dark neon-border blog-card-hover cursor-pointer">
                   <div className="absolute inset-0">
-                    <img alt={post.title} className="w-full h-full object-cover" src={post.image} />
+                    <img alt={post.title} loading="lazy" className="w-full h-full object-cover" src={post.image} />
                   </div>
                   <div className="absolute inset-0 card-overlay backdrop-blur-[2px]"></div>
                   <div className="absolute top-6 left-6 z-20">

@@ -71,7 +71,7 @@ export default function Gallery() {
 
   return (
     <>
-      <main className="relative pt-28 pb-24 min-h-screen">
+      <main className="relative pt-20 sm:pt-28 pb-24 min-h-screen">
         {/* Background */}
         <div className="fixed inset-0 z-0 pointer-events-none">
           <div className="absolute inset-0 bg-bg-dark"></div>
@@ -102,11 +102,10 @@ export default function Gallery() {
               <button
                 key={cat}
                 onClick={() => setActiveFilter(cat)}
-                className={`px-5 py-2 rounded-full text-sm font-bold uppercase tracking-wider transition-all border ${
-                  activeFilter === cat
-                    ? 'bg-primary/10 border-primary text-primary shadow-[0_0_12px_rgba(13,242,89,0.2)]'
-                    : 'bg-surface-dark border-white/10 text-gray-400 hover:border-primary/50 hover:text-primary'
-                }`}
+                className={`px-5 py-2 rounded-full text-sm font-bold uppercase tracking-wider transition-all border ${activeFilter === cat
+                  ? 'bg-primary/10 border-primary text-primary shadow-[0_0_12px_rgba(13,242,89,0.2)]'
+                  : 'bg-surface-dark border-white/10 text-gray-400 hover:border-primary/50 hover:text-primary'
+                  }`}
               >
                 {cat}
               </button>
@@ -114,17 +113,18 @@ export default function Gallery() {
           </div>
 
           {/* Masonry-style grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-[280px]">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-[200px] md:auto-rows-[280px]">
             {filtered.map((img, idx) => (
               <div
                 key={img.title}
-                className={`gallery-card group relative rounded-2xl overflow-hidden cursor-pointer border border-white/5 hover:border-primary/40 transition-all duration-500 ${img.span}`}
+                className={`gallery-card group relative rounded-2xl overflow-hidden cursor-pointer border border-white/5 hover:border-primary/40 transition-all duration-500 md:${img.span}`}
                 onClick={() => setLightbox(idx)}
               >
                 {/* Image */}
                 <img
                   alt={img.title}
                   src={img.src}
+                  loading="lazy"
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
 
@@ -199,13 +199,13 @@ export default function Gallery() {
 
           {/* Prev */}
           <button
-            className="absolute left-4 md:left-8 text-white/40 hover:text-primary transition-colors z-10"
+            className="absolute left-2 sm:left-4 md:left-8 text-white/40 hover:text-primary transition-colors z-10 p-2"
             onClick={(e) => {
               e.stopPropagation();
               setLightbox((lightbox - 1 + filtered.length) % filtered.length);
             }}
           >
-            <span className="material-symbols-outlined text-5xl">chevron_left</span>
+            <span className="material-symbols-outlined text-3xl sm:text-5xl">chevron_left</span>
           </button>
 
           {/* Image */}
@@ -231,13 +231,13 @@ export default function Gallery() {
 
           {/* Next */}
           <button
-            className="absolute right-4 md:right-8 text-white/40 hover:text-primary transition-colors z-10"
+            className="absolute right-2 sm:right-4 md:right-8 text-white/40 hover:text-primary transition-colors z-10 p-2"
             onClick={(e) => {
               e.stopPropagation();
               setLightbox((lightbox + 1) % filtered.length);
             }}
           >
-            <span className="material-symbols-outlined text-5xl">chevron_right</span>
+            <span className="material-symbols-outlined text-3xl sm:text-5xl">chevron_right</span>
           </button>
         </div>
       )}

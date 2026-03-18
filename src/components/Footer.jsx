@@ -65,12 +65,12 @@ export default function Footer() {
 
       {/* Bottom promo bar */}
       <div className="fixed bottom-0 left-0 right-0 bg-primary text-bg-dark py-2 z-50">
-        <div className="container mx-auto px-6 flex justify-between items-center">
-          <div className="flex items-center gap-2 font-bold text-sm sm:text-base text-black">
-            <span className="material-symbols-outlined animate-pulse">local_offer</span>
-            <span>NEW MEMBER SPECIAL: FIRST HOUR FREE!</span>
+        <div className="container mx-auto px-4 sm:px-6 flex justify-between items-center gap-2">
+          <div className="flex items-center gap-2 font-bold text-xs sm:text-sm text-black min-w-0">
+            <span className="material-symbols-outlined animate-pulse flex-shrink-0">local_offer</span>
+            <span className="truncate">NEW MEMBER SPECIAL: FIRST HOUR FREE!</span>
           </div>
-          <button className="bg-black text-white text-xs font-bold px-3 py-1.5 rounded hover:bg-gray-800 transition-colors">
+          <button className="bg-black text-white text-xs font-bold px-3 py-1.5 rounded hover:bg-gray-800 transition-colors flex-shrink-0">
             CLAIM NOW
           </button>
         </div>

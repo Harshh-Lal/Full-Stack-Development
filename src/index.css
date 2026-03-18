@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+html, body {
+  overflow-x: hidden;
+}
+
 @theme {
   --color-primary: #0df259;
   --color-secondary: #a855f7;
@@ -203,8 +207,13 @@
 
 /* Article content styles */
 .article-content {
-  font-size: 1.125rem;
+  font-size: 1rem;
   line-height: 1.8;
+}
+@media (min-width: 768px) {
+  .article-content {
+    font-size: 1.125rem;
+  }
 }
 .article-content p {
   margin-bottom: 1.5rem;
