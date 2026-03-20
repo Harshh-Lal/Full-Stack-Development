@@ -26,7 +26,7 @@ export default function Header() {
           <Link
             to="/"
             className={`text-sm font-medium transition-colors uppercase tracking-wide ${
-              isActive('/') ? 'text-white hover:text-primary' : 'text-gray-300 hover:text-primary'
+              isActive('/') ? 'text-primary font-bold border-b-2 border-primary pb-0.5' : 'text-gray-300 hover:text-primary'
             }`}
           >
             Home

@@ -1,4 +1,8 @@
 import { useState } from 'react';
+import valorantImg from '../assets/valo.png';
+import cs2Img from '../assets/cs_2.png';
+import rlImg from '../assets/rocket_league.png';
+import fcImg from '../assets/fc25.png';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 import HoverMaskReveal from '../components/HoverMaskReveal';
 
@@ -24,25 +28,25 @@ const gameLibrary = [
   {
     title: 'Valorant',
     genre: 'Tactical FPS',
-    image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1200&q=80',
+    image: valorantImg,
     accent: 'text-primary',
   },
   {
     title: 'Counter-Strike 2',
     genre: 'Precision Shooter',
-    image: 'https://images.unsplash.com/photo-1560253023-3ec5d502959f?auto=format&fit=crop&w=1200&q=80',
+    image: cs2Img,
     accent: 'text-secondary',
   },
   {
     title: 'Rocket League',
     genre: 'Arcade Esports',
-    image: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1200&q=80',
+    image: rlImg,
     accent: 'text-primary',
   },
   {
     title: 'EA FC',
     genre: 'Sports Sim',
-    image: 'https://images.unsplash.com/photo-1517927033932-b3d18e61fb3a?auto=format&fit=crop&w=1200&q=80',
+    image: fcImg,
     accent: 'text-secondary',
   },
   {
