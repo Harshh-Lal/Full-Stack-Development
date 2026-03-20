@@ -119,11 +119,11 @@ export default function Home() {
     }, []);
 
     return (
-        <main className="relative pt-20">
+        <main className="relative pt-16 sm:pt-20">
             {/* ─── HERO ─── */}
             <section
                 ref={heroRef}
-                className="relative min-h-[90vh] flex items-center justify-center overflow-hidden"
+                className="relative min-h-[75vh] sm:min-h-[90vh] flex items-center justify-center overflow-hidden"
                 style={{ cursor: 'none' }}
                 onMouseMove={handleHeroMouseMove}
             >
@@ -142,7 +142,7 @@ export default function Home() {
                         <span className="material-symbols-outlined text-primary text-sm">bolt</span>
                         <span className="text-xs font-medium tracking-widest uppercase text-white">Next Gen Gaming Facility</span>
                     </div>
-                    <h1 className="text-6xl md:text-8xl lg:text-[10rem] font-black tracking-tighter mb-6 leading-none">
+                    <h1 className="text-4xl sm:text-6xl md:text-8xl lg:text-[10rem] font-black tracking-tighter mb-6 leading-none">
                         <span
                             ref={ascendRef}
                             className="ascend-wrapper"
@@ -195,9 +195,9 @@ export default function Home() {
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                         {techCards.map((card) => (
-                            <div key={card.title} className="group relative h-112.5 rounded-xl overflow-hidden bg-card-dark neon-border card-hover-reveal border border-white/5">
+                            <div key={card.title} className="group relative h-72 sm:h-96 lg:h-[450px] rounded-xl overflow-hidden bg-card-dark neon-border card-hover-reveal border border-white/5">
                                 <div className="absolute inset-0">
-                                    <img alt={card.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-70 group-hover:opacity-50" src={card.image} />
+                                    <img alt={card.title} loading="lazy" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-70 group-hover:opacity-50" src={card.image} />
                                     <div className="absolute inset-0 bg-linear-to-t from-black via-black/40 to-transparent"></div>
                                 </div>
                                 <div className="absolute bottom-0 left-0 w-full p-6">
@@ -290,7 +290,7 @@ export default function Home() {
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {testimonials.map((t) => (
-                            <div key={t.name} className={`bg-card-dark p-8 rounded-xl border border-white/5 shadow-lg hover:border-primary/50 transition-colors ${t.offset ? 'md:translate-y-8' : ''}`}>
+                            <div key={t.name} className={`bg-card-dark p-6 sm:p-8 rounded-xl border border-white/5 shadow-lg hover:border-primary/50 transition-colors ${t.offset ? 'md:translate-y-8' : ''}`}>
                                 <div className="flex items-center gap-1 mb-4 text-primary">
                                     {[...Array(Math.floor(t.stars))].map((_, i) => (
                                         <span key={i} className="material-symbols-outlined text-sm drop-shadow-[0_0_5px_rgba(13,242,89,0.6)]">star</span>
@@ -302,7 +302,7 @@ export default function Home() {
                                 <p className="text-gray-300 italic mb-6">{t.text}</p>
                                 <div className="flex items-center gap-3">
                                     <div className={`w-10 h-10 rounded-full bg-linear-to-tr ${t.gradient} overflow-hidden`}>
-                                        <img alt={t.name} src={t.avatar} className="w-full h-full object-cover" />
+                                        <img alt={t.name} src={t.avatar} loading="lazy" className="w-full h-full object-cover" />
                                     </div>
                                     <div>
                                         <h4 className="text-white font-bold text-sm">{t.name}</h4>
@@ -319,7 +319,7 @@ export default function Home() {
             <section id="about" className="py-24 bg-bg-dark relative">
                 <div className="absolute inset-0 bg-secondary/5 skew-y-3 transform origin-top-left scale-110 pointer-events-none"></div>
                 <div className="container mx-auto px-6 relative z-10">
-                    <div className="max-w-4xl mx-auto bg-card-dark border border-white/10 rounded-2xl p-8 md:p-12 shadow-2xl overflow-hidden relative">
+                    <div className="max-w-4xl mx-auto bg-card-dark border border-white/10 rounded-2xl p-6 sm:p-8 md:p-12 shadow-2xl overflow-hidden relative">
                         <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2"></div>
                         <div className="absolute bottom-0 left-0 w-64 h-64 bg-secondary/10 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2"></div>
                         <div className="relative z-10 grid md:grid-cols-2 gap-12">

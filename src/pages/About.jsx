@@ -92,7 +92,7 @@ export default function About() {
   });
 
   return (
-    <main className="relative pt-20 bg-bg-dark text-white overflow-hidden">
+    <main className="relative pt-16 sm:pt-20 bg-bg-dark text-white overflow-hidden">
       <motion.div
         style={{ scaleX }}
         className="fixed top-0 left-0 right-0 h-1 bg-primary origin-left z-[60]"
@@ -141,7 +141,7 @@ export default function About() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="h-105 md:h-125"
+            className="h-64 sm:h-80 md:h-[420px]"
           >
             <HoverMaskReveal
               baseImage="/image.png"
@@ -192,6 +192,7 @@ export default function About() {
             <img
               src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1600&q=80"
               alt="Esports lounge owner with gaming setup"
+              loading="lazy"
               className="w-full h-72 object-cover"
             />
             <div className="p-8">
@@ -262,6 +263,7 @@ export default function About() {
                   <img
                     src={game.image}
                     alt={game.title}
+                    loading="lazy"
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />

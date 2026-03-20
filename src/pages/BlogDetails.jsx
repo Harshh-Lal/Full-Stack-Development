@@ -30,10 +30,10 @@ export default function BlogDetails() {
         </a>
         <a aria-label="Copy Link" className="w-10 h-10 rounded-full bg-surface-dark border border-white/10 flex items-center justify-center text-gray-400 hover:text-secondary hover:border-secondary transition-all hover:scale-110" href="#">
           <span className="material-symbols-outlined text-lg">link</span>
-        </a> 
+        </a>
       </aside>
 
-      <main className="relative pt-32 pb-24">
+      <main className="relative pt-24 sm:pt-32 pb-24">
         {/* Background effects */}
         <div className="fixed inset-0 z-0 pointer-events-none">
           <div className="absolute inset-0 bg-bg-dark"></div>
@@ -55,22 +55,22 @@ export default function BlogDetails() {
                 {post.title.split(' ').slice(-2).join(' ')}
               </span>
             </h1>
-            <div className="flex items-center justify-center gap-6 border-t border-b border-white/5 py-6 flex-wrap">
+            <div className="flex items-center justify-center gap-4 sm:gap-6 border-t border-b border-white/5 py-6 flex-wrap gap-y-3">
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 rounded-full border-2 border-primary p-0.5">
-                  <img alt={post.author} className="w-full h-full object-cover rounded-full" src={post.authorAvatar} />
+                  <img alt={post.author} loading="lazy" className="w-full h-full object-cover rounded-full" src={post.authorAvatar} />
                 </div>
                 <div className="text-left">
                   <div className="text-white font-bold text-sm">By {post.author}</div>
                   <div className="text-secondary text-xs font-medium">{post.authorRole}</div>
                 </div>
               </div>
-              <div className="h-8 w-px bg-white/10"></div>
+              <div className="h-8 w-px bg-white/10 hidden sm:block"></div>
               <div className="text-left">
                 <div className="text-gray-400 text-xs uppercase tracking-wider mb-0.5">Published</div>
                 <div className="text-white font-medium text-sm">{post.date}</div>
               </div>
-              <div className="h-8 w-px bg-white/10"></div>
+              <div className="h-8 w-px bg-white/10 hidden sm:block"></div>
               <div className="px-3 py-1 rounded bg-primary/10 border border-primary/20 text-primary text-xs font-bold shadow-[0_0_10px_rgba(13,242,89,0.2)]">
                 {post.readTime.toUpperCase()}
               </div>
@@ -80,7 +80,7 @@ export default function BlogDetails() {
           {/* Hero Image */}
           <div className="relative w-full aspect-video rounded-2xl overflow-hidden neon-glow-purple mb-16 group">
             <div className="absolute inset-0 bg-secondary/20 z-10 mix-blend-overlay"></div>
-            <img alt={post.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src={post.image} />
+            <img alt={post.title} loading="lazy" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src={post.image} />
             <div className="absolute bottom-0 left-0 right-0 h-32 bg-linear-to-t from-bg-dark to-transparent z-20"></div>
           </div>
 
@@ -164,9 +164,9 @@ export default function BlogDetails() {
               };
               const c = colorMap[rp.categoryColor] || colorMap.primary;
               return (
-                <Link to={`/blog/${rp.id}`} key={rp.id} className="group relative h-85 rounded-lg overflow-hidden bg-card-dark neon-border card-hover-reveal block">
+                <Link to={`/blog/${rp.id}`} key={rp.id} className="group relative h-64 md:h-[340px] rounded-lg overflow-hidden bg-card-dark neon-border card-hover-reveal block">
                   <div className="absolute inset-0">
-                    <img alt={rp.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-70 group-hover:opacity-50" src={rp.image} />
+                    <img alt={rp.title} loading="lazy" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-70 group-hover:opacity-50" src={rp.image} />
                     <div className="absolute inset-0 bg-linear-to-t from-bg-dark via-transparent to-transparent"></div>
                   </div>
                   <div className="absolute top-0 left-0 p-6 w-full">
