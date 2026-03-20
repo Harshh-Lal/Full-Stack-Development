@@ -189,8 +189,8 @@ html, body {
 /* Visible green cursor — small dot by default, expands on GOD MODE hover */
 .hero-cursor {
   position: absolute;
-  width: 20px;
-  height: 20px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
   background: #0df259;
   pointer-events: none;
@@ -201,8 +201,28 @@ html, body {
               height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .hero-cursor--expanded {
-  width: 400px;
-  height: 400px;
+  width: 150px;
+  height: 150px;
+}
+@media (min-width: 640px) {
+  .hero-cursor {
+    width: 16px;
+    height: 16px;
+  }
+  .hero-cursor--expanded {
+    width: 250px;
+    height: 250px;
+  }
+}
+@media (min-width: 768px) {
+  .hero-cursor {
+    width: 20px;
+    height: 20px;
+  }
+  .hero-cursor--expanded {
+    width: 400px;
+    height: 400px;
+  }
 }
 
 /* Article content styles */

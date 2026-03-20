@@ -75,6 +75,14 @@ export default function Home() {
     const [isOverGodmode, setIsOverGodmode] = useState(false);
     const [formSubmitted, setFormSubmitted] = useState(false);
 
+    // Responsive mask size — must match CSS breakpoints for .hero-cursor--expanded
+    const getExpandedMaskSize = useCallback(() => {
+        const w = window.innerWidth;
+        if (w >= 768) return 400;
+        if (w >= 640) return 250;
+        return 150;
+    }, []);
+
     const handleHeroMouseMove = useCallback((e) => {
         const hero = heroRef.current;
         const cursor = cursorRef.current;
@@ -86,11 +94,14 @@ export default function Home() {
         cursor.style.left = `${e.clientX - heroRect.left}px`;
         cursor.style.top = `${e.clientY - heroRect.top}px`;
 
+        const expandedSize = getExpandedMaskSize();
+        const smallSize = expandedSize < 200 ? 20 : 40;
+
         // Update mask on GOD MODE text
         if (godmode) {
             const gmRect = godmode.getBoundingClientRect();
             // Mask should match the cursor circle size & position
-            const maskSize = isOverGodmode ? 400 : 40;
+            const maskSize = isOverGodmode ? expandedSize : smallSize;
             const mx = e.clientX - gmRect.left - maskSize / 2;
             const my = e.clientY - gmRect.top - maskSize / 2;
             godmode.style.setProperty('--mask-x', `${mx}px`);
@@ -102,20 +113,21 @@ export default function Home() {
         const ascend = ascendRef.current;
         if (ascend) {
             const asRect = ascend.getBoundingClientRect();
-            const maskSize = isOverGodmode ? 400 : 40;
+            const maskSize = isOverGodmode ? expandedSize : smallSize;
             const mx = e.clientX - asRect.left - maskSize / 2;
             const my = e.clientY - asRect.top - maskSize / 2;
             ascend.style.setProperty('--mask-x', `${mx}px`);
             ascend.style.setProperty('--mask-y', `${my}px`);
             ascend.style.setProperty('--mask-size', `${maskSize}px`);
         }
-    }, [isOverGodmode]);
+    }, [isOverGodmode, getExpandedMaskSize]);
 
     const handleGodmodeEnter = useCallback(() => setIsOverGodmode(true), []);
     const handleGodmodeLeave = useCallback(() => {
         setIsOverGodmode(false);
+        const smallSize = window.innerWidth >= 768 ? 40 : 20;
         const el = godmodeRef.current;
-        if (el) el.style.setProperty('--mask-size', '40px');
+        if (el) el.style.setProperty('--mask-size', `${smallSize}px`);
     }, []);
 
     return (

@@ -1,4 +1,4 @@
-import { useRef, useEffect, useCallback } from 'react';
+import { useRef, useEffect, useCallback, useState } from 'react';
 import { useMotionValue, useSpring } from 'framer-motion';
 
 /**
@@ -24,6 +24,14 @@ export default function HoverMaskReveal({
   const timeRef = useRef(0);
   const revealImgRef = useRef(null);
   const imgLoadedRef = useRef(false);
+
+  // ── Responsive radius — scale down on small screens ────────────
+  const getResponsiveRadius = useCallback(() => {
+    const w = window.innerWidth;
+    if (w >= 768) return revealRadius;       // md+: full size
+    if (w >= 640) return revealRadius * 0.7;  // sm: 70%
+    return revealRadius * 0.5;                // mobile: 50%
+  }, [revealRadius]);
 
   // ── Motion springs for silky cursor tracking ──────────────────────
   const mx = useMotionValue(0);
@@ -189,7 +197,7 @@ export default function HoverMaskReveal({
       onMouseMove={updatePointer}
       onMouseEnter={(e) => {
         updatePointer(e);
-        radiusTarget.set(revealRadius);
+        radiusTarget.set(getResponsiveRadius());
       }}
       onMouseLeave={() => radiusTarget.set(0)}
       className={`relative overflow-hidden rounded-2xl border border-white/10 bg-card-dark ${className}`}
