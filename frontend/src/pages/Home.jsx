@@ -74,6 +74,7 @@ export default function Home() {
     const cursorRef = useRef(null);
     const [isOverGodmode, setIsOverGodmode] = useState(false);
     const [formSubmitted, setFormSubmitted] = useState(false);
+    const [messageText, setMessageText] = useState("");
 
     // Responsive mask size — must match CSS breakpoints for .hero-cursor--expanded
     const getExpandedMaskSize = useCallback(() => {
@@ -362,6 +363,7 @@ export default function Home() {
                             <form className="space-y-4" onSubmit={(e) => {
                                 e.preventDefault();
                                 setFormSubmitted(true);
+                                setMessageText("");
                                 e.target.reset();
                                 setTimeout(() => setFormSubmitted(false), 4000);
                             }}>
@@ -373,9 +375,12 @@ export default function Home() {
                                     <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2" htmlFor="email">Email</label>
                                     <input required className="w-full bg-black/40 border border-white/10 rounded-lg p-3 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder-gray-600" id="email" placeholder="you@example.com" type="email" />
                                 </div>
-                                <div>
+                                <div className="relative">
                                     <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2" htmlFor="message">Message</label>
-                                    <textarea required className="w-full bg-black/40 border border-white/10 rounded-lg p-3 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder-gray-600 h-32 resize-none" id="message" placeholder="How can we help you level up?"></textarea>
+                                    <textarea required maxLength={400} value={messageText} onChange={(e) => setMessageText(e.target.value)} className="w-full bg-black/40 border border-white/10 rounded-lg p-3 pb-6 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder-gray-600 h-32 resize-none" id="message" placeholder="How can we help you level up?"></textarea>
+                                    <div className={`absolute bottom-3 right-3 text-xs font-medium ${messageText.length === 400 ? 'text-red-500' : 'text-gray-500'}`}>
+                                        {messageText.length}/400
+                                    </div>
                                 </div>
                                 <button className="w-full py-4 bg-primary text-bg-dark font-bold text-lg rounded-lg hover:bg-white hover:shadow-[0_0_20px_rgba(13,242,89,0.5)] transition-all flex items-center justify-center gap-2 group">
                                     SEND MESSAGE <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">send</span>
