@@ -37,7 +37,7 @@ export default function Footer() {
               <ul className="space-y-2">
                 <li><a className="text-gray-400 hover:text-primary text-sm transition-colors" href="#">Book a PC</a></li>
                 <li><a className="text-gray-400 hover:text-primary text-sm transition-colors" href="#">Pricing</a></li>
-                <li><a className="text-gray-400 hover:text-primary text-sm transition-colors" href="#">Tournaments</a></li>
+                <li><Link className="text-gray-400 hover:text-primary text-sm transition-colors" to="/tournament">Tournaments</Link></li>
                 <li><a className="text-gray-400 hover:text-primary text-sm transition-colors" href="#">Membership</a></li>
               </ul>
             </div>

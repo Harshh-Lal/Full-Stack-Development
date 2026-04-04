@@ -10,6 +10,7 @@ const Blogs = lazy(() => import('./pages/Blogs'));
 const BlogDetails = lazy(() => import('./pages/BlogDetails'));
 const Gallery = lazy(() => import('./pages/Gallery'));
 const About = lazy(() => import('./pages/About'));
+const Tournament = lazy(() => import('./pages/Tournament'));
 
 // Loading fallback shown between page navigations
 function PageLoader() {
@@ -35,6 +36,7 @@ function App() {
           <Route path="/blog/:id" element={<BlogDetails />} />
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/about" element={<About />} />
+          <Route path="/tournament" element={<Tournament />} />
         </Routes>
       </Suspense>
       <Footer />
