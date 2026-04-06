@@ -1,0 +1,26 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model StationBooking {
+  id            Int      @id @default(autoincrement())
+  customerName  String
+  phone         String
+  email         String?
+  stationType   String
+  stationId     String
+  durationHours Int
+  date          String
+  timeSlot      String
+  pricingINR    Int
+  currencyShown String   @default("INR")
+  status        String   @default("pending")
+  notes         String?  @db.Text
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
