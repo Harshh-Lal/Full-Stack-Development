@@ -289,22 +289,22 @@ function RegistrationModal({ tournament, onClose }) {
                     <div>
                       <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5" htmlFor="reg-captain">Captain / Player Name</label>
                       <input required id="reg-captain" name="captain" value={form.captain} onChange={handleChange}
-                        className="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-primary outline-none transition-all placeholder-gray-600 text-sm"
+                        className="contact-input w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-primary outline-none transition-all placeholder-gray-600 text-sm"
                         placeholder="Your gamer tag / real name" type="text" />
                     </div>
                     <div>
                       <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5" htmlFor="reg-email">Email Address</label>
                       <input required id="reg-email" name="email" value={form.email} onChange={handleChange}
-                        className="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-primary outline-none transition-all placeholder-gray-600 text-sm"
+                        className="contact-input w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-primary outline-none transition-all placeholder-gray-600 text-sm"
                         placeholder="you@example.com" type="email" />
                     </div>
                     <div>
                       <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5" htmlFor="reg-phone">Phone Number</label>
                       <input required id="reg-phone" name="phone" value={form.phone} onChange={handleChange}
-                        className="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-primary outline-none transition-all placeholder-gray-600 text-sm"
+                        className="contact-input w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-primary outline-none transition-all placeholder-gray-600 text-sm"
                         placeholder="+91 XXXXX XXXXX" type="tel" />
                     </div>
-                    <button type="submit" className="w-full py-3 bg-primary text-black font-bold rounded-lg hover:bg-white hover:shadow-[0_0_20px_rgba(13,242,89,0.4)] transition-all flex items-center justify-center gap-2 text-sm">
+                    <button type="submit" className="w-full py-3 bg-primary text-black font-bold rounded-lg hover:bg-[#ffffff] hover:text-[#000000] hover:shadow-[0_0_20px_rgba(13,242,89,0.4)] transition-all flex items-center justify-center gap-2 text-sm">
                       Next Step <span className="material-symbols-outlined text-sm">arrow_forward</span>
                     </button>
                   </>
@@ -314,19 +314,19 @@ function RegistrationModal({ tournament, onClose }) {
                     <div>
                       <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5" htmlFor="reg-team">Team Name</label>
                       <input required id="reg-team" name="team" value={form.team} onChange={handleChange}
-                        className="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-primary outline-none transition-all placeholder-gray-600 text-sm"
+                        className="contact-input w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-primary outline-none transition-all placeholder-gray-600 text-sm"
                         placeholder="e.g. Shadow Protocol" type="text" />
                     </div>
                     <div>
                       <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5" htmlFor="reg-members">Team Members (comma-separated)</label>
                       <input id="reg-members" name="members" value={form.members} onChange={handleChange}
-                        className="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-primary outline-none transition-all placeholder-gray-600 text-sm"
+                        className="contact-input w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-primary outline-none transition-all placeholder-gray-600 text-sm"
                         placeholder="Player2, Player3, Player4, Player5" type="text" />
                     </div>
                     <div>
                       <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5" htmlFor="reg-gameid">In-Game ID / Username</label>
                       <input required id="reg-gameid" name="gameId" value={form.gameId} onChange={handleChange}
-                        className="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-primary outline-none transition-all placeholder-gray-600 text-sm"
+                        className="contact-input w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-primary outline-none transition-all placeholder-gray-600 text-sm"
                         placeholder="Your in-game username" type="text" />
                     </div>
                     <label className="flex items-start gap-3 cursor-pointer group">
@@ -337,7 +337,7 @@ function RegistrationModal({ tournament, onClose }) {
                       <button type="button" onClick={() => setStep(1)} className="flex-1 py-3 border border-white/10 text-gray-300 font-bold rounded-lg hover:bg-white/5 transition-all text-sm">
                         Back
                       </button>
-                      <button type="submit" className="flex-1 py-3 bg-primary text-black font-bold rounded-lg hover:bg-white hover:shadow-[0_0_20px_rgba(13,242,89,0.4)] transition-all flex items-center justify-center gap-2 text-sm">
+                      <button type="submit" className="flex-1 py-3 bg-primary text-black font-bold rounded-lg hover:bg-[#ffffff] hover:text-[#000000] hover:shadow-[0_0_20px_rgba(13,242,89,0.4)] transition-all flex items-center justify-center gap-2 text-sm">
                         <span className="material-symbols-outlined text-sm">how_to_reg</span> Confirm Registration
                       </button>
                     </div>
@@ -353,7 +353,7 @@ function RegistrationModal({ tournament, onClose }) {
               <h4 className="text-2xl font-bold text-white mb-2">You're Registered!</h4>
               <p className="text-gray-400 text-sm mb-1">A confirmation has been sent to <span className="text-primary font-bold">{form.email}</span></p>
               <p className="text-gray-500 text-xs mb-6">Check in 30 mins before your match. Entry fee payable at the desk.</p>
-              <div className="bg-black/40 border border-white/10 rounded-xl p-4 text-left text-sm space-y-2 mb-6">
+              <div className="bg-card-dark border border-white/10 rounded-xl p-4 text-left text-sm space-y-2 mb-6">
                 <div className="flex justify-between"><span className="text-gray-500">Team:</span><span className="text-white font-bold">{form.team || '—'}</span></div>
                 <div className="flex justify-between"><span className="text-gray-500">Captain:</span><span className="text-white font-bold">{form.captain}</span></div>
                 <div className="flex justify-between"><span className="text-gray-500">Tournament:</span><span className="text-primary font-bold">{tournament.title}</span></div>
@@ -393,7 +393,7 @@ function Countdown({ targetDate }) {
     <div className="flex gap-2 sm:gap-4">
       {[['d', 'Days'], ['h', 'Hrs'], ['m', 'Min'], ['s', 'Sec']].map(([k, label]) => (
         <div key={k} className="flex flex-col items-center">
-          <div className="w-14 h-14 sm:w-16 sm:h-16 bg-black/60 border border-primary/30 rounded-lg flex items-center justify-center">
+          <div className="w-14 h-14 sm:w-16 sm:h-16 bg-card-dark border border-primary/30 rounded-lg flex items-center justify-center">
             <span className="text-primary font-black text-xl sm:text-2xl tabular-nums">{pad(time[k])}</span>
           </div>
           <span className="text-gray-500 text-[10px] uppercase tracking-wider mt-1">{label}</span>
@@ -410,12 +410,11 @@ export default function Tournament() {
   const [selectedTournament, setSelectedTournament] = useState(null);
   const [expandedRules, setExpandedRules] = useState(null);
   const [hofActive, setHofActive] = useState(0);
-
   return (
-    <main className="relative pt-16 sm:pt-20 bg-bg-dark min-h-screen">
+    <main className="relative bg-bg-dark min-h-screen">
 
       {/* ─── HERO BANNER ─── */}
-      <section className="relative min-h-[65vh] flex items-center justify-center overflow-hidden">
+      <section className="pt-5 relative min-h-[65vh] flex items-center justify-center overflow-hidden">
         {/* Background */}
         <div className="absolute inset-0 bg-bg-dark">
           <div className="absolute inset-0 bg-grid-pattern opacity-20" />
@@ -446,7 +445,7 @@ export default function Tournament() {
             Real stakes. Real glory. LevelUp hosts weekly esports tournaments across VALORANT, BGMI, FIFA 25, and more — with cash prizes up to ₹30,000.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-8">
-            <a href="#upcoming" className="group px-8 py-4 bg-primary text-black font-black text-base rounded overflow-hidden hover:bg-white hover:shadow-[0_0_30px_rgba(13,242,89,0.5)] transition-all flex items-center gap-2">
+            <a href="#upcoming" className="group px-8 py-4 bg-primary text-black font-black text-base rounded overflow-hidden hover:bg-[#ffffff] hover:text-[#000000] hover:shadow-[0_0_30px_rgba(13,242,89,0.5)] transition-all flex items-center gap-2">
               <span className="material-symbols-outlined">how_to_reg</span>
               REGISTER NOW
             </a>
@@ -492,7 +491,7 @@ export default function Tournament() {
           <div className="flex rounded-lg overflow-hidden border border-white/10">
             {['upcoming', 'past'].map((tab) => (
               <button key={tab} onClick={() => setActiveTab(tab)}
-                className={`px-5 py-2.5 text-sm font-bold uppercase tracking-wider transition-all ${activeTab === tab ? 'bg-primary text-black' : 'bg-black/40 text-gray-400 hover:text-white'}`}>
+                className={`px-5 py-2.5 text-sm font-bold uppercase tracking-wider transition-all ${activeTab === tab ? 'bg-primary text-black' : 'bg-surface-dark text-gray-400 hover:text-white'}`}>
                 {tab === 'upcoming' ? '🟢 Upcoming' : '🏆 Records'}
               </button>
             ))}
@@ -593,7 +592,7 @@ export default function Tournament() {
                     { label: 'Teams', value: t.teams, icon: 'group' },
                     { label: 'Matches', value: t.totalMatches, icon: 'sports_esports' },
                   ].map((s) => (
-                    <div key={s.label} className="bg-black/30 rounded-xl p-3 text-center">
+                    <div key={s.label} className="bg-white/5 rounded-xl p-3 text-center">
                       <span className="material-symbols-outlined text-gray-600 text-sm mb-1 block">{s.icon}</span>
                       <div className="text-white font-black text-base">{s.value}</div>
                       <div className="text-gray-500 text-[10px] uppercase tracking-wider">{s.label}</div>
@@ -601,7 +600,7 @@ export default function Tournament() {
                   ))}
                 </div>
 
-                <div className="space-y-2 bg-black/20 rounded-xl p-4 border border-white/5">
+                <div className="space-y-2 bg-white/5 rounded-xl p-4 border border-white/5">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2 text-sm">
                       <span className="material-symbols-outlined text-yellow-400 text-base">emoji_events</span>
@@ -649,7 +648,7 @@ export default function Tournament() {
               <p className="text-gray-500 text-sm uppercase tracking-widest">Starts In</p>
               <Countdown targetDate="2026-04-19T18:00:00+05:30" />
               <button onClick={() => setSelectedTournament(upcomingTournaments[0])}
-                className="mt-2 px-8 py-3 bg-primary text-black font-black rounded-lg hover:bg-white hover:shadow-[0_0_20px_rgba(13,242,89,0.5)] transition-all text-sm flex items-center gap-2">
+                className="mt-2 px-8 py-3 bg-primary text-black font-black rounded-lg hover:bg-[#ffffff] hover:text-[#000000] hover:shadow-[0_0_20px_rgba(13,242,89,0.5)] transition-all text-sm flex items-center gap-2">
                 <span className="material-symbols-outlined text-sm">how_to_reg</span>
                 SECURE YOUR SLOT
               </button>
@@ -678,7 +677,7 @@ export default function Tournament() {
                   {round.matches.map((m, mi) => (
                     <div key={mi} className={`rounded-xl border overflow-hidden transition-all ${m.status === 'tbd' ? 'border-white/5 opacity-50' : 'border-white/10 hover:border-primary/30'}`}>
                       {[{ name: m.team1, score: m.score1 }, { name: m.team2, score: m.score2 }].map((side, si) => (
-                        <div key={si} className={`flex items-center justify-between px-4 py-2.5 ${si === 0 ? 'border-b border-white/5' : ''} ${m.status === 'tbd' ? 'bg-black/20' : 'bg-card-dark hover:bg-black/50 transition-colors'}`}>
+                        <div key={si} className={`flex items-center justify-between px-4 py-2.5 ${si === 0 ? 'border-b border-white/5' : ''} ${m.status === 'tbd' ? 'bg-white/5' : 'bg-card-dark hover:bg-white/10 transition-colors'}`}>
                           <span className={`text-sm font-bold ${m.status === 'tbd' ? 'text-gray-600' : 'text-white'}`}>{side.name}</span>
                           <span className={`text-sm font-black px-2 py-0.5 rounded ${side.score !== null ? 'bg-primary/20 text-primary' : 'text-gray-600'}`}>{side.score !== null ? side.score : '—'}</span>
                         </div>
@@ -871,7 +870,7 @@ export default function Tournament() {
                 </div>
 
                 {/* Highlight Quote */}
-                <div className="px-6 sm:px-8 py-5 border-t border-white/5 bg-black/20 flex items-start gap-4">
+                <div className="px-6 sm:px-8 py-5 border-t border-white/5 bg-white/5 flex items-start gap-4">
                   <span className="material-symbols-outlined text-yellow-400/60 text-3xl flex-shrink-0 mt-0.5">format_quote</span>
                   <p className="text-gray-300 text-sm leading-relaxed italic">{entry.highlight}</p>
                 </div>
@@ -939,7 +938,7 @@ export default function Tournament() {
           <p className="text-gray-400 mb-10 max-w-xl mx-auto text-lg">Register for an upcoming tournament today. Limited slots are available — secure yours before they're gone.</p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <button onClick={() => setSelectedTournament(upcomingTournaments[0])}
-              className="px-10 py-4 bg-primary text-black font-black text-base rounded hover:bg-white hover:shadow-[0_0_30px_rgba(13,242,89,0.5)] transition-all flex items-center gap-2">
+              className="px-10 py-4 bg-primary text-black font-black text-base rounded hover:bg-[#ffffff] hover:text-[#000000] hover:shadow-[0_0_30px_rgba(13,242,89,0.5)] transition-all flex items-center gap-2">
               <span className="material-symbols-outlined">sports_esports</span>
               REGISTER NOW
             </button>

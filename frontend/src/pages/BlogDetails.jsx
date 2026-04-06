@@ -7,10 +7,10 @@ export default function BlogDetails() {
 
   if (!post) {
     return (
-      <main className="relative pt-32 pb-24 min-h-screen">
+      <main className="relative pt-24 sm:pt-32 pb-24 min-h-screen">
         <div className="container mx-auto px-6 text-center">
           <h1 className="text-4xl font-bold text-white mb-4">Article Not Found</h1>
-          <Link to="/blogs" className="text-primary hover:underline">Back to Intel Hub</Link>
+          <Link to="/blogs" className="text-primary hover:underline font-medium">Back to Intel Hub</Link>
         </div>
       </main>
     );
@@ -33,7 +33,7 @@ export default function BlogDetails() {
         </a>
       </aside>
 
-      <main className="relative pt-24 sm:pt-32 pb-24">
+      <main className="relative pt-24 sm:pt-32 pb-24 min-h-screen">
         {/* Background effects */}
         <div className="fixed inset-0 z-0 pointer-events-none">
           <div className="absolute inset-0 bg-bg-dark"></div>
@@ -85,7 +85,7 @@ export default function BlogDetails() {
           </div>
 
           {/* Article Content */}
-          <div className="article-content max-w-[70ch] mx-auto text-[#E2E8F0]">
+          <div className="article-content max-w-[70ch] mx-auto text-gray-300">
             <p className="lead text-xl text-gray-300 font-light mb-8">{post.content.lead}</p>
 
             {post.content.sections.map((section, idx) => (
@@ -122,7 +122,7 @@ export default function BlogDetails() {
                     <div className="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-primary/20 rounded-full blur-xl"></div>
                     <h4 className="text-white font-bold text-lg mb-2">{section.callout.title}</h4>
                     <p className="text-sm text-gray-400 mb-4">{section.callout.text}</p>
-                    <button className="px-6 py-2 bg-primary text-bg-dark font-bold text-sm rounded hover:bg-white transition-colors">
+                    <button className="px-6 py-2 bg-primary text-bg-dark font-bold text-sm rounded hover:bg-[#ffffff] hover:text-[#000000] hover:shadow-[0_0_20px_rgba(13,242,89,0.5)] transition-all">
                       {section.callout.buttonText}
                     </button>
                   </div>
@@ -166,15 +166,15 @@ export default function BlogDetails() {
               return (
                 <Link to={`/blog/${rp.id}`} key={rp.id} className="group relative h-64 md:h-[340px] rounded-lg overflow-hidden bg-card-dark neon-border card-hover-reveal block">
                   <div className="absolute inset-0">
-                    <img alt={rp.title} loading="lazy" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-70 group-hover:opacity-50" src={rp.image} />
-                    <div className="absolute inset-0 bg-linear-to-t from-bg-dark via-transparent to-transparent"></div>
+                    <img alt={rp.title} loading="lazy" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src={rp.image} />
+                    <div className="absolute inset-0 bg-linear-to-t"></div>
                   </div>
                   <div className="absolute top-0 left-0 p-6 w-full">
                     <span className={`${c.bg} ${c.text} text-[10px] font-bold px-2 py-1 rounded border ${c.border} uppercase tracking-wide`}>
                       {rp.category}
                     </span>
                   </div>
-                  <div className="absolute bottom-0 left-0 w-full p-6 bg-surface-dark/95 backdrop-blur-md border-t border-white/10 reveal-content">
+                  <div className="absolute bottom-0 left-0 w-full p-6 bg-surface-dark border-t border-white/10 reveal-content">
                     <div className="space-y-2">
                       <h3 className="text-lg font-bold text-white leading-tight group-hover:text-primary transition-colors">{rp.title}</h3>
                       <div className="flex items-center gap-2 text-xs text-gray-500">

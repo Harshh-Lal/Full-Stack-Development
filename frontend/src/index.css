@@ -326,7 +326,7 @@ html.light .hero-cursor {
 .article-content h2 {
   font-size: 1.875rem;
   font-weight: 700;
-  color: white;
+  color: var(--color-white);
   margin-top: 3rem;
   margin-bottom: 1rem;
   display: flex;
@@ -335,21 +335,21 @@ html.light .hero-cursor {
 }
 .article-content h2::before {
   content: '#';
-  color: #0df259;
+  color: var(--app-primary);
   opacity: 0.8;
 }
 .article-content h3 {
   font-size: 1.5rem;
   font-weight: 600;
-  color: #e2e8f0;
+  color: var(--color-gray-900);
   margin-top: 2rem;
   margin-bottom: 0.75rem;
 }
 
 /* Pro tip block */
 .pro-tip-block {
-  border-left: 4px solid #0df259;
-  background: rgba(13, 242, 89, 0.05);
+  border-left: 4px solid var(--app-primary);
+  background: color-mix(in srgb, var(--app-primary) 5%, transparent);
   padding: 1.5rem;
   margin: 2rem 0;
   border-radius: 0 0.5rem 0.5rem 0;
@@ -367,10 +367,10 @@ html.light .hero-cursor {
 
 /* Filter chip active */
 .filter-chip.active {
-  background-color: rgba(13, 242, 89, 0.1);
-  border-color: #0df259;
-  color: #0df259;
-  box-shadow: 0 0 10px rgba(13, 242, 89, 0.2);
+  background-color: color-mix(in srgb, var(--app-primary) 10%, transparent);
+  border-color: var(--app-primary);
+  color: var(--app-primary);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--app-primary) 20%, transparent);
 }
 
 /* Background patterns */

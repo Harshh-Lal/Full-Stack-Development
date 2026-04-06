@@ -93,7 +93,7 @@ export default function About() {
   });
 
   return (
-    <main className="relative pt-16 sm:pt-20 bg-bg-dark text-white overflow-hidden">
+    <main className="relative bg-bg-dark text-white overflow-hidden">
       <motion.div
         style={{ scaleX }}
         className="fixed top-0 left-0 right-0 h-1 bg-primary origin-left z-[60]"
@@ -303,19 +303,20 @@ export default function About() {
                   transition={{ duration: 0.35, delay: index * 0.06 }}
                   className="rounded-xl border border-white/10 bg-card-dark/80 overflow-hidden"
                 >
-                  <div className="w-full px-6 py-5 text-left flex items-center justify-between hover:bg-white/5 transition-colors">
+                  <button 
+                    onClick={() => setOpenIndex(isOpen ? -1 : index)}
+                    className="w-full px-6 py-5 text-left flex items-center justify-between hover:bg-white/5 transition-colors cursor-pointer"
+                    aria-expanded={isOpen}
+                  >
                     <span className="font-semibold text-lg">{item.q}</span>
-                    <motion.button
-                      type="button"
-                      onClick={() => setOpenIndex(isOpen ? -1 : index)}
-                      aria-label={`${isOpen ? 'Close' : 'Open'} FAQ: ${item.q}`}
+                    <motion.div
                       animate={{ rotate: isOpen ? 45 : 0 }}
                       transition={{ duration: 0.2 }}
                       className="text-primary text-3xl leading-none"
                     >
                       +
-                    </motion.button>
-                  </div>
+                    </motion.div>
+                  </button>
 
                   <AnimatePresence initial={false}>
                     {isOpen && (

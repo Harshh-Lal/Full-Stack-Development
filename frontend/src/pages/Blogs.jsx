@@ -21,7 +21,7 @@ export default function Blogs() {
     : blogPosts.filter(p => p.category.toLowerCase().includes(activeFilter.toLowerCase()));
 
   return (
-    <main className="relative pt-24 sm:pt-32 pb-24">
+    <main className="relative pt-24 sm:pt-32 pb-24 min-h-screen">
       {/* Background effects */}
       <div className="fixed inset-0 z-0 pointer-events-none">
         <div className="absolute inset-0 bg-bg-dark"></div>

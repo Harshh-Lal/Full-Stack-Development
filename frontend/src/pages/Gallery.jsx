@@ -191,7 +191,7 @@ export default function Gallery() {
           onClick={() => setLightbox(null)}
         >
           <button
-            className="absolute top-6 right-6 text-white/60 hover:text-white transition-colors z-10"
+            className="absolute top-6 right-6 text-[#ffffff]/60 hover:text-[#ffffff] transition-colors z-10"
             onClick={() => setLightbox(null)}
           >
             <span className="material-symbols-outlined text-4xl">close</span>
@@ -199,7 +199,7 @@ export default function Gallery() {
 
           {/* Prev */}
           <button
-            className="absolute left-2 sm:left-4 md:left-8 text-white/40 hover:text-primary transition-colors z-10 p-2"
+            className="absolute left-2 sm:left-4 md:left-8 text-[#ffffff]/40 hover:text-primary transition-colors z-10 p-2"
             onClick={(e) => {
               e.stopPropagation();
               setLightbox((lightbox - 1 + filtered.length) % filtered.length);
@@ -216,13 +216,13 @@ export default function Gallery() {
               className="max-w-full max-h-[80vh] object-contain rounded-lg shadow-2xl"
             />
             <div className="mt-4 text-center">
-              <h3 className="text-xl font-bold text-white">{filtered[lightbox].title}</h3>
-              <p className="text-sm text-gray-400 mt-1">{filtered[lightbox].description}</p>
+              <h3 className="text-xl font-bold text-[#ffffff]">{filtered[lightbox].title}</h3>
+              <p className="text-sm text-[#9ca3af] mt-1">{filtered[lightbox].description}</p>
               <div className="flex items-center justify-center gap-4 mt-3">
                 <span className="px-3 py-1 rounded-full bg-primary/10 border border-primary/30 text-primary text-xs font-bold uppercase tracking-wider">
                   {filtered[lightbox].category}
                 </span>
-                <span className="text-white/40 text-sm font-mono">
+                <span className="text-[#ffffff]/40 text-sm font-mono">
                   {String(lightbox + 1).padStart(2, '0')} / {String(filtered.length).padStart(2, '0')}
                 </span>
               </div>
@@ -231,7 +231,7 @@ export default function Gallery() {
 
           {/* Next */}
           <button
-            className="absolute right-2 sm:right-4 md:right-8 text-white/40 hover:text-primary transition-colors z-10 p-2"
+            className="absolute right-2 sm:right-4 md:right-8 text-[#ffffff]/40 hover:text-primary transition-colors z-10 p-2"
             onClick={(e) => {
               e.stopPropagation();
               setLightbox((lightbox + 1) % filtered.length);

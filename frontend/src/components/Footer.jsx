@@ -1,6 +1,10 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import BookingModal from './BookingModal';
 
 export default function Footer() {
+  const [bookingOpen, setBookingOpen] = useState(false);
+
   return (
     <footer className="bg-surface-dark border-t border-white/10 pt-16 pb-8">
       <div className="container mx-auto px-6">
@@ -35,17 +39,16 @@ export default function Footer() {
             <div>
               <h3 className="text-white font-bold mb-4 uppercase tracking-widest text-xs">Menu</h3>
               <ul className="space-y-2">
-                <li><a className="text-gray-400 hover:text-primary text-sm transition-colors" href="#">Book a PC</a></li>
-                <li><a className="text-gray-400 hover:text-primary text-sm transition-colors" href="#">Pricing</a></li>
+                <li><button onClick={() => setBookingOpen(true)} className="text-gray-400 hover:text-primary text-sm transition-colors text-left">Book a PC</button></li>
+                <li><button onClick={() => setBookingOpen(true)} className="text-gray-400 hover:text-primary text-sm transition-colors text-left">Pricing</button></li>
                 <li><Link className="text-gray-400 hover:text-primary text-sm transition-colors" to="/tournament">Tournaments</Link></li>
-                <li><a className="text-gray-400 hover:text-primary text-sm transition-colors" href="#">Membership</a></li>
               </ul>
             </div>
             <div>
               <h3 className="text-white font-bold mb-4 uppercase tracking-widest text-xs">Support</h3>
               <ul className="space-y-2">
-                <li><a className="text-gray-400 hover:text-primary text-sm transition-colors" href="#">FAQ</a></li>
-                <li><a className="text-gray-400 hover:text-primary text-sm transition-colors" href="#">Contact Us</a></li>
+                <li><Link className="text-gray-400 hover:text-primary text-sm transition-colors" to="/about#faq">FAQ</Link></li>
+                <li><a className="text-gray-400 hover:text-primary text-sm transition-colors" href="/#reach-out">Contact Us</a></li>
                 <li><a className="text-gray-400 hover:text-primary text-sm transition-colors" href="#">Terms of Service</a></li>
                 <li><a className="text-gray-400 hover:text-primary text-sm transition-colors" href="#">Privacy Policy</a></li>
               </ul>
@@ -63,18 +66,8 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Bottom promo bar */}
-      <div className="fixed bottom-0 left-0 right-0 bg-primary text-bg-dark py-2 z-50">
-        <div className="container mx-auto px-4 sm:px-6 flex justify-between items-center gap-2">
-          <div className="flex items-center gap-2 font-bold text-xs sm:text-sm text-black min-w-0">
-            <span className="material-symbols-outlined animate-pulse flex-shrink-0">local_offer</span>
-            <span className="truncate">NEW MEMBER SPECIAL: FIRST HOUR FREE!</span>
-          </div>
-          <button className="bg-black text-white text-xs font-bold px-3 py-1.5 rounded hover:bg-gray-800 transition-colors flex-shrink-0">
-            CLAIM NOW
-          </button>
-        </div>
-      </div>
+      {/* Booking Form injected in Footer */}
+      <BookingModal open={bookingOpen} onClose={() => setBookingOpen(false)} />
     </footer>
   );
 }
