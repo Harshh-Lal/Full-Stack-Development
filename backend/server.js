@@ -11,11 +11,9 @@ app.use(express.json())
 // ── Routes ──────────────────────────────────────────────────────
 import bookingRoutes from './routes/bookings.js'
 import adminRoutes from './routes/admin.js'
-import ratesRoutes from './routes/rates.js'
 
 app.use('/api/bookings', bookingRoutes)
 app.use('/api/admin', adminRoutes)
-app.use('/api/rates', ratesRoutes)
 
 // ── Health check ─────────────────────────────────────────────────
 app.get('/api/health', (_req, res) => res.json({ status: 'ok', service: 'LevelUp API' }))

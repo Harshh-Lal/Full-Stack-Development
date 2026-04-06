@@ -26,13 +26,17 @@ export default function BookingModal({ open, onClose }) {
     const [error, setError] = useState('');
     const [bookingId, setBookingId] = useState(null);
 
-    // Fetch rates once on mount
+    // Fetch real-time rates directly using ExchangeRate-API
     useEffect(() => {
         if (!open) return;
-        fetch('http://localhost:5000/api/rates')
+        fetch('https://v6.exchangerate-api.com/v6/fa24c7655db276ed6c858146/latest/INR')
             .then(r => r.json())
-            .then(data => { if (data.rates) setRates(data.rates); })
-            .catch(() => {});
+            .then(data => { 
+                if (data.result === 'success' && data.conversion_rates) {
+                    setRates(data.conversion_rates); 
+                }
+            })
+            .catch(() => console.error("Failed to load real-time exchange rates."));
     }, [open]);
 
     // Auto-select first station when type changes
