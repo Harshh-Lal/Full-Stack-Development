@@ -227,8 +227,8 @@ export default function HoverMaskReveal({
         <p className="text-xs tracking-[0.22em] uppercase text-primary font-bold">
           Interactive Layer
         </p>
-        <h3 className="text-2xl md:text-3xl font-black mt-2">{title}</h3>
-        <p className="text-sm text-gray-300 mt-2">
+        <h3 className="text-2xl md:text-3xl font-black mt-2 text-[#ffffff]">{title}</h3>
+        <p className="text-sm text-[#cbd5e1] mt-2">
           Move your cursor across the frame to reveal the energy map.
         </p>
       </div>

@@ -12,11 +12,26 @@ const navLinks = [
 export default function Header() {
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
 
   // Close mobile menu on route change
   useEffect(() => {
     setMobileOpen(false);
   }, [location.pathname]);
+
+  // Apply theme to HTML and save
+  useEffect(() => {
+    if (theme === 'light') {
+      document.documentElement.classList.add('light');
+    } else {
+      document.documentElement.classList.remove('light');
+    }
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+  };
 
   const isActive = (path) => location.pathname === path;
   const isBlogActive = (path) =>
@@ -67,6 +82,18 @@ export default function Header() {
             </span>
             <span className="text-xs font-bold text-primary tracking-wide whitespace-nowrap">12/40 PCs ONLINE</span>
           </div>
+          
+          {/* Theme Toggle */}
+          <button 
+            onClick={toggleTheme}
+            className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 text-white transition-all ml-1"
+            aria-label="Toggle theme"
+          >
+            <span className="material-symbols-outlined text-sm sm:text-base">
+              {theme === 'dark' ? 'light_mode' : 'dark_mode'}
+            </span>
+          </button>
+
           {/* Hamburger */}
           <button
             className="md:hidden text-white p-1 rounded hover:bg-white/5 transition-colors"

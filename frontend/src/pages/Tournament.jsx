@@ -459,7 +459,7 @@ export default function Tournament() {
       </section>
 
       {/* ─── STATS TICKER ─── */}
-      <div className="mt-10 border-y border-primary/20 bg-black/60 backdrop-blur-sm overflow-hidden">
+      <div className="mt-10 border-y border-primary/20 ticker-bg backdrop-blur-sm overflow-hidden">
         <div className="flex gap-0 animate-[scroll_20s_linear_infinite] whitespace-nowrap py-4 w-max">
           {[...Array(3)].map((_, ri) => (
             [

@@ -74,12 +74,12 @@ export default function Blogs() {
                     </span>
                   </div>
                   <div className="absolute bottom-0 left-0 w-full p-8 reveal-content z-20">
-                    <h3 className={`text-3xl font-bold text-white leading-tight mb-3 ${colors.hoverText} transition-colors`}>
+                    <h3 className={`text-3xl font-bold text-[#ffffff] leading-tight mb-3 ${colors.hoverText} transition-colors`}>
                       {post.title}
                     </h3>
-                    <p className="text-gray-300 mb-6 line-clamp-2 text-sm leading-relaxed">{post.excerpt}</p>
+                    <p className="text-[#d1d5db] mb-6 line-clamp-2 text-sm leading-relaxed">{post.excerpt}</p>
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3 text-xs text-gray-400">
+                      <div className="flex items-center gap-3 text-xs text-[#9ca3af]">
                         <div className="flex items-center gap-1">
                           <span className="material-symbols-outlined text-sm">schedule</span>
                           <span>{post.readTime}</span>
@@ -87,7 +87,7 @@ export default function Blogs() {
                         <span>&bull;</span>
                         <span>{post.date}</span>
                       </div>
-                      <span className={`flex items-center gap-2 text-white font-bold text-sm uppercase tracking-wide border-b ${colors.borderBottom} pb-0.5 ${colors.hoverText} transition-colors`}>
+                      <span className={`flex items-center gap-2 text-[#ffffff] font-bold text-sm uppercase tracking-wide border-b ${colors.borderBottom} pb-0.5 ${colors.hoverText} transition-colors`}>
                         Read Now <span className="material-symbols-outlined text-sm">arrow_forward</span>
                       </span>
                     </div>

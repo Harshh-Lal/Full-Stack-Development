@@ -214,13 +214,13 @@ export default function Home() {
                                     <div className="absolute inset-0 bg-linear-to-t from-black via-black/40 to-transparent"></div>
                                 </div>
                                 <div className="absolute bottom-0 left-0 w-full p-6">
-                                    <h3 className="text-2xl font-bold text-white mb-1">{card.title}</h3>
+                                    <h3 className="text-2xl font-bold text-[#ffffff] mb-1">{card.title}</h3>
                                     <p className={`${techColorMap[card.color] || 'text-primary'} text-sm font-bold mb-4 tracking-wide`}>{card.subtitle}</p>
                                     <div className="space-y-3 bg-black/60 backdrop-blur-md p-4 rounded-lg border border-white/10 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
                                         {card.specs.map((spec, i) => (
                                             <div key={spec.label} className={`flex justify-between ${i < card.specs.length - 1 ? 'border-b border-white/10 pb-2' : ''}`}>
-                                                <span className="text-gray-400 text-xs uppercase">{spec.label}</span>
-                                                <span className="text-white text-xs font-bold">{spec.value}</span>
+                                                <span className="text-[#9ca3af] text-xs uppercase">{spec.label}</span>
+                                                <span className="text-[#ffffff] text-xs font-bold">{spec.value}</span>
                                             </div>
                                         ))}
                                     </div>
@@ -369,15 +369,15 @@ export default function Home() {
                             }}>
                                 <div>
                                     <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2" htmlFor="name">Name</label>
-                                    <input required className="w-full bg-black/40 border border-white/10 rounded-lg p-3 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder-gray-600" id="name" placeholder="Your Gamer Tag or Name" type="text" />
+                                    <input required className="contact-input w-full bg-black/40 border border-white/10 rounded-lg p-3 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder-gray-600" id="name" placeholder="Your Gamer Tag or Name" type="text" />
                                 </div>
                                 <div>
                                     <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2" htmlFor="email">Email</label>
-                                    <input required className="w-full bg-black/40 border border-white/10 rounded-lg p-3 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder-gray-600" id="email" placeholder="you@example.com" type="email" />
+                                    <input required className="contact-input w-full bg-black/40 border border-white/10 rounded-lg p-3 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder-gray-600" id="email" placeholder="you@example.com" type="email" />
                                 </div>
                                 <div className="relative">
                                     <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2" htmlFor="message">Message</label>
-                                    <textarea required maxLength={400} value={messageText} onChange={(e) => setMessageText(e.target.value)} className="w-full bg-black/40 border border-white/10 rounded-lg p-3 pb-6 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder-gray-600 h-32 resize-none" id="message" placeholder="How can we help you level up?"></textarea>
+                                    <textarea required maxLength={400} value={messageText} onChange={(e) => setMessageText(e.target.value)} className="contact-input w-full bg-black/40 border border-white/10 rounded-lg p-3 pb-6 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder-gray-600 h-32 resize-none" id="message" placeholder="How can we help you level up?"></textarea>
                                     <div className={`absolute bottom-3 right-3 text-xs font-medium ${messageText.length === 400 ? 'text-red-500' : 'text-gray-500'}`}>
                                         {messageText.length}/400
                                     </div>
@@ -407,18 +407,25 @@ export default function Home() {
                 </div>
             )}
 
-            {/* ─── NEWSLETTER CTA ─── */}
-            <section className="py-20 relative overflow-hidden">
-                <div className="absolute inset-0 bg-secondary/5"></div>
+            {/* ─── CTA ─── */}
+            <section className="py-24 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-bg-dark to-secondary/8" />
+                <div className="absolute inset-0 bg-grid-pattern opacity-10" />
                 <div className="container mx-auto px-6 relative z-10 text-center">
-                    <h2 className="text-4xl font-bold text-white mb-6">READY TO DOMINATE?</h2>
-                    <p className="text-gray-400 mb-8 max-w-xl mx-auto">Join the Level Up community today. Sign up for our newsletter to get tournament updates and exclusive gear drops.</p>
-                    <form className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto" onSubmit={(e) => e.preventDefault()}>
-                        <input className="bg-black/50 border border-white/20 text-white px-6 py-3 rounded-lg focus:outline-none focus:border-primary w-full placeholder-gray-600" placeholder="Enter your email" type="email" />
-                        <button className="bg-white text-black font-bold px-8 py-3 rounded-lg hover:bg-primary transition-colors whitespace-nowrap">
-                            GET UPDATES
-                        </button>
-                    </form>
+                    <span className="material-symbols-outlined text-primary text-5xl mb-4 block animate-pulse">emoji_events</span>
+                    <h2 className="text-4xl md:text-6xl font-black text-white mb-4">READY TO <span className="text-primary">DOMINATE</span>?</h2>
+                    <p className="text-gray-400 mb-10 max-w-xl mx-auto text-lg">Register for an upcoming tournament today. Limited slots are available — secure yours before they're gone.</p>
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                        <Link to="/tournament"
+                            className="px-10 py-4 bg-primary text-black font-black text-base rounded hover:bg-white hover:shadow-[0_0_30px_rgba(13,242,89,0.5)] transition-all flex items-center gap-2">
+                            <span className="material-symbols-outlined">sports_esports</span>
+                            REGISTER NOW
+                        </Link>
+                        <a href="tel:+915550000263" className="px-10 py-4 bg-transparent border border-white/20 text-white font-bold text-base rounded hover:bg-white/5 transition-all flex items-center gap-2">
+                            <span className="material-symbols-outlined">call</span>
+                            CALL US
+                        </a>
+                    </div>
                 </div>
             </section>
         </main>

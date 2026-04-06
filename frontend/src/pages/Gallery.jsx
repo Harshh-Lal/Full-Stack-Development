@@ -139,16 +139,16 @@ export default function Gallery() {
                 </div>
 
                 {/* Counter — top right */}
-                <div className="absolute top-4 right-4 z-10 text-white/30 text-xs font-mono">
+                <div className="absolute top-4 right-4 z-10 text-[#ffffff]/30 text-xs font-mono">
                   {String(idx + 1).padStart(2, '0')}
                 </div>
 
                 {/* Info — bottom */}
                 <div className="absolute bottom-0 left-0 right-0 p-6 z-10 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                  <h3 className="text-2xl font-bold text-white mb-1 group-hover:text-primary transition-colors duration-300">
+                  <h3 className="text-2xl font-bold text-[#ffffff] mb-1 group-hover:text-primary transition-colors duration-300">
                     {img.title}
                   </h3>
-                  <p className="text-sm text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100 max-w-sm">
+                  <p className="text-sm text-[#9ca3af] opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100 max-w-sm">
                     {img.description}
                   </p>
                   <div className="flex items-center gap-2 mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-200">

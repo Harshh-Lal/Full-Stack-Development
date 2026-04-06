@@ -4,12 +4,57 @@ html, body {
   overflow-x: hidden;
 }
 
+:root {
+  /* Default to dark mode tokens */
+  --app-primary: #0df259;
+  --app-secondary: #a855f7;
+  --app-bg-dark: #0a0a0a;
+  --app-surface-dark: #121212;
+  --app-card-dark: #1a1a1a;
+  
+  /* Overlays and Glass */
+  --app-glass-bg: rgba(10, 10, 10, 0.7);
+  --app-glass-border: rgba(255, 255, 255, 0.05);
+  --app-overlay-gradient: linear-gradient(to top, rgba(10, 10, 10, 0.95), rgba(10, 10, 10, 0.4), transparent);
+  --app-overlay-solid: rgba(10, 10, 10, 0.9);
+}
+
+html.light {
+  /* Light mode palette referencing: Esports Lounge Hero Light Mode */
+  --app-primary: #137fec;       /* Reference Blue */
+  --app-secondary: #8b5cf6;     /* Adjusted purple for light theme contrast */
+  
+  /* Swap the dark structural colors to light mode surfaces */
+  --app-bg-dark: #f8fafc;       /* Slate 50 */
+  --app-surface-dark: #ffffff;  /* White */
+  --app-card-dark: #f1f5f9;     /* Slate 100 */
+
+  /* Overlays and Glass for Light Mode */
+  --app-glass-bg: rgba(255, 255, 255, 0.85);
+  --app-glass-border: rgba(0, 0, 0, 0.1);
+  /* Removed overlay overrides: keep them dark like in dark mode to retain the moody image look */
+
+  /* Automatic Inversion: Override core Tailwind colors within the light theme context */
+  /* This automatically fixes text-white globally! */
+  --color-white: #111827;       /* text-white becomes dark slate text */
+  /* color-black is kept as black so image overlays (black/80) stay dark! */
+
+  
+  /* Invert common grays used for text, borders, and overlays */
+  --color-gray-900: #e2e8f0;    /* Background layers / overlays */
+  --color-gray-800: #cbd5e1;
+  --color-gray-600: #64748b;
+  --color-gray-500: #475569;
+  --color-gray-400: #334155;    /* Gray text becomes dark text */
+  --color-gray-300: #1e293b;
+}
+
 @theme {
-  --color-primary: #0df259;
-  --color-secondary: #a855f7;
-  --color-bg-dark: #0a0a0a;
-  --color-surface-dark: #121212;
-  --color-card-dark: #1a1a1a;
+  --color-primary: var(--app-primary);
+  --color-secondary: var(--app-secondary);
+  --color-bg-dark: var(--app-bg-dark);
+  --color-surface-dark: var(--app-surface-dark);
+  --color-card-dark: var(--app-card-dark);
   --animate-slideUp: slideUp 0.4s ease-out;
 }
 
@@ -23,12 +68,23 @@ html, body {
   to   { transform: translateX(-33.333%); }
 }
 
+/* Stats Ticker Background */
+.ticker-bg { background-color: #000000; }
+html.light .ticker-bg { background-color: #ffffff; }
+
+/* Contact Form Inputs */
+html.light .contact-input {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #111827 !important;
+}
+
 /* Glass header */
 .glass {
-  background: rgba(10, 10, 10, 0.7);
+  background: var(--app-glass-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid var(--app-glass-border);
 }
 
 /* Card hover reveal */
@@ -51,7 +107,7 @@ html, body {
   transform: translateY(0);
 }
 .blog-card-hover .card-overlay {
-  background: linear-gradient(to top, rgba(10, 10, 10, 0.95), rgba(10, 10, 10, 0.4), transparent);
+  background: var(--app-overlay-gradient);
   opacity: 0;
   transition: opacity 0.4s ease;
 }
@@ -71,7 +127,7 @@ html, body {
   transition: all 0.3s ease;
 }
 .neon-border:hover {
-  border-color: #0df259;
+  border-color: var(--app-primary);
   box-shadow: 0 0 15px rgba(13, 242, 89, 0.2);
 }
 
@@ -90,7 +146,7 @@ html, body {
   transform: scale(1.05);
 }
 .gallery-overlay {
-  background: linear-gradient(to top, rgba(10,10,10,0.9) 0%, transparent 100%);
+  background: linear-gradient(to top, var(--app-overlay-solid) 0%, transparent 100%);
   opacity: 0;
   transition: opacity 0.3s ease;
 }
@@ -208,6 +264,30 @@ html, body {
 .hero-cursor--expanded {
   width: 150px;
   height: 150px;
+}
+
+/* ─── Light Mode Overrides for God Mode Hero ─── */
+html.light .ascend-base {
+  background: linear-gradient(to right, #137fec 0%, #34d399 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 15px rgba(19, 127, 236, 0.2);
+}
+
+html.light .godmode-base {
+  background: linear-gradient(to right, #137fec 0%, #34d399 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: blur(12px);
+  text-shadow: 0 0 30px rgba(19, 127, 236, 0.4),
+               0 0 60px rgba(19, 127, 236, 0.2),
+               0 0 100px rgba(52, 211, 153, 0.2);
+}
+
+html.light .hero-cursor {
+  background: #137fec;
 }
 @media (min-width: 640px) {
   .hero-cursor {
