@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 
 // ─── DATA ────────────────────────────────────────────────────────────────────
 
@@ -768,11 +769,10 @@ export default function Tournament() {
               <button
                 key={entry.season}
                 onClick={() => setHofActive(i)}
-                className={`px-5 py-2.5 rounded-xl text-sm font-black tracking-wide transition-all border ${
-                  hofActive === i
-                    ? 'bg-yellow-500/15 border-yellow-500/50 text-yellow-400 shadow-[0_0_20px_rgba(245,158,11,0.2)]'
-                    : 'bg-card-dark border-white/5 text-gray-500 hover:text-white hover:border-white/20'
-                }`}
+                className={`px-5 py-2.5 rounded-xl text-sm font-black tracking-wide transition-all border ${hofActive === i
+                  ? 'bg-yellow-500/15 border-yellow-500/50 text-yellow-400 shadow-[0_0_20px_rgba(245,158,11,0.2)]'
+                  : 'bg-card-dark border-white/5 text-gray-500 hover:text-white hover:border-white/20'
+                  }`}
               >
                 {entry.season}
                 <span className="ml-2 text-[10px] opacity-60">{entry.game}</span>
@@ -784,9 +784,8 @@ export default function Tournament() {
           {hallOfFame.map((entry, i) => (
             <div
               key={entry.season}
-              className={`transition-all duration-500 ${
-                hofActive === i ? 'block opacity-100' : 'hidden opacity-0'
-              }`}
+              className={`transition-all duration-500 ${hofActive === i ? 'block opacity-100' : 'hidden opacity-0'
+                }`}
             >
               <div className={`rounded-2xl border border-white/10 overflow-hidden bg-gradient-to-br ${entry.gradient}`}>
                 {/* Tournament Header Bar */}
@@ -884,11 +883,10 @@ export default function Tournament() {
               <button
                 key={i}
                 onClick={() => setHofActive(i)}
-                className={`rounded-full transition-all duration-300 ${
-                  hofActive === i
-                    ? 'w-8 h-2 bg-yellow-400'
-                    : 'w-2 h-2 bg-white/20 hover:bg-white/40'
-                }`}
+                className={`rounded-full transition-all duration-300 ${hofActive === i
+                  ? 'w-8 h-2 bg-yellow-400'
+                  : 'w-2 h-2 bg-white/20 hover:bg-white/40'
+                  }`}
               />
             ))}
           </div>
@@ -929,20 +927,20 @@ export default function Tournament() {
       </section>
 
       {/* ─── CTA ─── */}
-      <section className="py-24 relative overflow-hidden">
+      <section className="py-24 relative overflow-hidden tourn-cta-dark">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-bg-dark to-secondary/8" />
         <div className="absolute inset-0 bg-grid-pattern opacity-10" />
         <div className="container mx-auto px-6 relative z-10 text-center">
           <span className="material-symbols-outlined text-primary text-5xl mb-4 block animate-pulse">emoji_events</span>
-          <h2 className="text-4xl md:text-6xl font-black text-white mb-4">READY TO <span className="text-primary">DOMINATE</span>?</h2>
-          <p className="text-gray-400 mb-10 max-w-xl mx-auto text-lg">Register for an upcoming tournament today. Limited slots are available — secure yours before they're gone.</p>
+          <h2 className="cta-heading text-4xl md:text-6xl font-black text-white mb-4">READY TO <span className="text-primary">DOMINATE</span>?</h2>
+          <p className="cta-subtext text-gray-400 mb-10 max-w-xl mx-auto text-lg">Register for an upcoming tournament today. Limited slots are available — secure yours before they're gone.</p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button onClick={() => setSelectedTournament(upcomingTournaments[0])}
+            <Link to="/tournament"
               className="px-10 py-4 bg-primary text-black font-black text-base rounded hover:bg-[#ffffff] hover:text-[#000000] hover:shadow-[0_0_30px_rgba(13,242,89,0.5)] transition-all flex items-center gap-2">
               <span className="material-symbols-outlined">sports_esports</span>
               REGISTER NOW
-            </button>
-            <a href="tel:+915550000263" className="px-10 py-4 bg-transparent border border-white/20 text-white font-bold text-base rounded hover:bg-white/5 transition-all flex items-center gap-2">
+            </Link>
+            <a href="tel:+915550000263" className="cta-outline-btn px-10 py-4 bg-transparent border border-white/20 text-white font-bold text-base rounded hover:bg-white/5 transition-all flex items-center gap-2">
               <span className="material-symbols-outlined">call</span>
               CALL US
             </a>

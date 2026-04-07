@@ -49,6 +49,16 @@ html.light {
   --color-gray-300: #1e293b;
 }
 
+/* Text selection highlight for Light Theme */
+html.light ::selection {
+  background-color: var(--app-primary);
+  color: #ffffff;
+}
+html.light *::-moz-selection {
+  background-color: var(--app-primary);
+  color: #ffffff;
+}
+
 @theme {
   --color-primary: var(--app-primary);
   --color-secondary: var(--app-secondary);
@@ -375,11 +385,41 @@ html.light .hero-cursor {
 
 /* Background patterns */
 .bg-mesh-pattern {
-  background: radial-gradient(at 0% 0%, rgba(13, 242, 89, 0.15) 0px, transparent 50%),
-              radial-gradient(at 100% 0%, rgba(168, 85, 247, 0.15) 0px, transparent 50%);
+  background: radial-gradient(at 0% 0%, var(--app-primary, rgba(13, 242, 89, 0.15)) 0px, transparent 50%),
+              radial-gradient(at 100% 0%, var(--app-secondary, rgba(168, 85, 247, 0.15)) 0px, transparent 50%);
+  opacity: 0.1;
 }
+
+html.light .bg-mesh-pattern {
+  background: radial-gradient(at 0% 0%, rgba(19, 127, 236, 0.1) 0px, transparent 50%),
+              radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.1) 0px, transparent 50%);
+}
+
 .bg-grid-pattern {
   background: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
               linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
   background-size: 40px 40px;
+}
+
+html.light .bg-grid-pattern {
+  background: linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+}
+
+/* ─── Tournament CTA: force dark look in light mode ─── */
+html.light .tourn-cta-dark {
+  background-color: #0a0a0a;
+}
+html.light .tourn-cta-dark .cta-heading {
+  color: #ffffff !important;
+}
+html.light .tourn-cta-dark .cta-subtext {
+  color: #9ca3af !important;
+}
+html.light .tourn-cta-dark .cta-outline-btn {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+}
+html.light .tourn-cta-dark .cta-outline-btn:hover {
+  background-color: rgba(255, 255, 255, 0.05) !important;
 }

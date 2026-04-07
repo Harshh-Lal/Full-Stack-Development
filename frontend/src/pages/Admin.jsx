@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 
-const API = 'http://localhost:5000/api';
+const API = 'http://localhost:5001/api';
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 function getToken() { return sessionStorage.getItem('lu_admin_token'); }
