@@ -2,9 +2,8 @@ import { useState, useEffect } from 'react';
 
 // ── Booking Config ─────────────────────────────────────────────────────────
 export const STATION_CONFIG = {
-    pc:   { label: 'PC',    icon: 'computer',         pricePerHour: 150,  ids: ['PC-01','PC-02','PC-03','PC-04','PC-05','PC-06','PC-07','PC-08'] },
-    ps5:  { label: 'PS5',   icon: 'sports_esports',   pricePerHour: 200,  ids: ['PS5-01','PS5-02','PS5-03'] },
-    xbox: { label: 'Xbox',  icon: 'stadia_controller',pricePerHour: 180,  ids: ['XBOX-01','XBOX-02'] },
+    pc:   { label: 'PC',    icon: 'computer',         pricePerHour: 150,  ids: ['PC-01','PC-02','PC-03','PC-04','PC-05','PC-06','PC-07','PC-08','PC-09','PC-10'] },
+    ps5:  { label: 'PS5',   icon: 'sports_esports',   pricePerHour: 200,  ids: ['PS5-01'] }, // 1 is active, 1 is unavailable
 };
 export const CURRENCIES = ['INR', 'USD', 'EUR', 'GBP', 'AED'];
 export const TIME_SLOTS = [

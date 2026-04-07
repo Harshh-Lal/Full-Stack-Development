@@ -10,7 +10,7 @@ import HoverMaskReveal from '../components/HoverMaskReveal';
 const loungeHighlights = [
   {
     title: 'Built For Competitive Play',
-    description: '40 high-performance stations, low-latency networking, and tournament-grade displays tuned for esports response times.',
+    description: '10 high-performance RTX 5060 rigs, 240Hz Lenovo Legion displays, and ultra-fast 0.5ms response times.',
     icon: 'sports_esports',
   },
   {
@@ -156,7 +156,7 @@ export default function About() {
         </div>
       </section>
 
-      <section className="py-20 border-b border-white/5 bg-surface-dark/40">
+      <section className="py-20 bg-surface-dark/40">
         <div className="container mx-auto px-6 grid lg:grid-cols-2 gap-8 items-stretch">
           <motion.article
             initial={{ opacity: 0, x: -30 }}
@@ -185,7 +185,7 @@ export default function About() {
 
           <motion.article
             initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             className="rounded-2xl border border-white/10 overflow-hidden bg-card-dark"
@@ -199,7 +199,7 @@ export default function About() {
             <div className="p-8">
               <h3 className="text-xl font-bold">Lounge Info</h3>
               <p className="mt-4 text-gray-300 leading-relaxed">
-                40 premium stations, dedicated console pods, 10Gbps fiber backbone, and a spectator-first stage zone. Designed for both daily play and event nights.
+                10 premium RTX 5060 stations, 4K PS5 gaming zone, 10Gbps fiber backbone, and a spectator-first stage area. Equipped with 240Hz Lenovo Legion monitors and Logitech precision gear.
               </p>
             </div>
           </motion.article>

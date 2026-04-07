@@ -26,20 +26,20 @@ const techColorMap = {
 
 const techCards = [
     {
-        title: "BATTLE STATIONS", subtitle: "TIER 1 RIGS", color: "primary", image: images.battleStation,
-        specs: [{ label: "GPU", value: "RTX 4090" }, { label: "CPU", value: "i9-14900K" }, { label: "RAM", value: "64GB DDR5" }]
+        title: "BATTLE STATIONS", subtitle: "RTX 5060 RIGS", color: "primary", image: images.battleStation,
+        specs: [{ label: "GPU", value: "RTX 5060" }, { label: "CPU", value: "i5 14th Gen" }, { label: "RAM", value: "16GB DDR5" }]
     },
     {
-        title: "NEXT-GEN CONSOLES", subtitle: "PS5 & XBOX SERIES X", color: "secondary", image: images.console,
-        specs: [{ label: "Display", value: "4K 120Hz OLED" }, { label: "Sound", value: "3D Audio" }, { label: "Library", value: "Game Pass Ult." }]
+        title: "NEXT-GEN CONSOLES", subtitle: "PS5 & 4K EXPERIENCE", color: "secondary", image: images.console,
+        specs: [{ label: "Display", value: "4K 43\" TV" }, { label: "Platform", value: "PlayStation 5" }, { label: "Active", value: "1 Active Slot" }]
     },
     {
-        title: "PRECISION INPUT", subtitle: "SCUF & DUALSENSE EDGE", color: "primary", image: images.controller,
-        specs: [{ label: "Type", value: "Back Paddles" }, { label: "Trigger", value: "Adjustable Stops" }, { label: "Latency", value: "1ms Wireless" }]
+        title: "PRO PERIPHERALS", subtitle: "LOGITECH & ANT ESPORTS", color: "primary", image: images.controller,
+        specs: [{ label: "Mouse", value: "Logitech G201" }, { label: "Chair", value: "Ant Esports" }, { label: "Surface", value: "Speed Edition" }]
     },
     {
-        title: "TACTILE CONTROL", subtitle: "CUSTOM MECH BOARDS", color: "secondary", image: images.keyboard,
-        specs: [{ label: "Switches", value: "Holy Pandas" }, { label: "Build", value: "Gasket Mount" }, { label: "Polling", value: "8000Hz" }]
+        title: "ELITE DISPLAYS", subtitle: "LENOVO LEGION 240HZ", color: "secondary", image: images.keyboard,
+        specs: [{ label: "Refresh", value: "240Hz" }, { label: "Latency", value: "0.5ms Response" }, { label: "Panel", value: "24\" Gaming" }]
     },
 ];
 
