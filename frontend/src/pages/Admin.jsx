@@ -1,6 +1,17 @@
 import { useState, useEffect, useCallback } from 'react';
+import LiveStationsSection from './LiveStations.jsx';
 
-const API = 'http://localhost:5001/api';
+
+const API = 'http://localhost:5000/api';
+const CATS = ['drinks', 'snacks', 'meals', 'desserts'];
+const CAT_COLORS = {
+  drinks:   { text: 'text-blue-400',   border: 'border-blue-500/30',   bg: 'bg-blue-500/10'   },
+  snacks:   { text: 'text-amber-400',  border: 'border-amber-500/30',  bg: 'bg-amber-500/10'  },
+  meals:    { text: 'text-orange-400', border: 'border-orange-500/30', bg: 'bg-orange-500/10' },
+  desserts: { text: 'text-pink-400',   border: 'border-pink-500/30',   bg: 'bg-pink-500/10'   },
+};
+
+function fmtPrice(n) { return `₹${Number(n).toLocaleString('en-IN')}`; }
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 function getToken() { return sessionStorage.getItem('lu_admin_token'); }
@@ -187,9 +198,310 @@ function PinModal({ onSuccess }) {
   );
 }
 
+// ── Menu Management ────────────────────────────────────────────────────────────
+function MenuManagement({ light }) {
+  const [menuGrouped, setMenuGrouped] = useState({});
+  const [gst, setGst]                 = useState(null);
+  const [loading, setLoading]         = useState(true);
+  const [activeCat, setActiveCat]     = useState('drinks');
+  const [addModal, setAddModal]       = useState(false);
+  const [editPrice, setEditPrice]     = useState({});
+  const [editGst, setEditGst]         = useState(false);
+  const [gstDraft, setGstDraft]       = useState('');
+  const [addForm, setAddForm]         = useState({ name: '', category: 'drinks', price: '', sortOrder: '' });
+  const [saving, setSaving]           = useState(null);
+  const [deleteConfirm, setDeleteConfirm] = useState(null); // item id awaiting confirm
+
+  const fetchMenu = useCallback(async () => {
+    const [mRes, gRes] = await Promise.all([
+      fetch(`${API}/menu`),
+      fetch(`${API}/gst`),
+    ]);
+    if (mRes.ok) setMenuGrouped(await mRes.json());
+    if (gRes.ok) { const g = await gRes.json(); setGst(g); setGstDraft(String(parseFloat(g.percentage))); }
+    setLoading(false);
+  }, []);
+
+  useEffect(() => { fetchMenu(); }, [fetchMenu]);
+
+  async function handleToggle(item) {
+    await fetch(`${API}/menu/${item.id}/toggle`, { method: 'PATCH', headers: authHeaders() });
+    fetchMenu();
+  }
+
+  async function handleDelete(item) {
+    const res = await fetch(`${API}/menu/${item.id}`, { method: 'DELETE', headers: authHeaders() });
+    if (!res.ok) {
+      const d = await res.json();
+      alert(d.error || 'Failed to delete item.');
+    }
+    setDeleteConfirm(null);
+    fetchMenu();
+  }
+
+  async function handlePriceSave(item) {
+    const price = parseInt(editPrice[item.id]);
+    if (isNaN(price) || price < 0) return;
+    setSaving(item.id);
+    await fetch(`${API}/menu/${item.id}`, { method: 'PATCH', headers: authHeaders(), body: JSON.stringify({ price }) });
+    setSaving(null);
+    setEditPrice(p => { const n = { ...p }; delete n[item.id]; return n; });
+    fetchMenu();
+  }
+
+  async function handleAddItem() {
+    const { name, category, price, sortOrder } = addForm;
+    if (!name.trim() || !price) return;
+    await fetch(`${API}/menu`, {
+      method: 'POST', headers: authHeaders(),
+      body: JSON.stringify({ name: name.trim(), category, price: parseInt(price), sortOrder: parseInt(sortOrder || 0) }),
+    });
+    setAddModal(false);
+    setAddForm({ name: '', category: 'drinks', price: '', sortOrder: '' });
+    fetchMenu();
+  }
+
+  async function handleGstSave() {
+    const percentage = parseFloat(gstDraft);
+    if (isNaN(percentage)) return;
+    await fetch(`${API}/gst`, { method: 'PATCH', headers: authHeaders(), body: JSON.stringify({ percentage }) });
+    setEditGst(false);
+    fetchMenu();
+  }
+
+  const tc = {
+    card:  light ? 'bg-white border-gray-200'   : 'bg-[#0f0f0f] border-[#1a1a1a]',
+    th:    light ? 'bg-gray-50 text-gray-500'   : 'bg-[#080808] text-gray-500',
+    tr:    light ? 'hover:bg-gray-50 border-b border-gray-100' : 'hover:bg-white/2 border-b border-[#1a1a1a]',
+    td:    light ? 'text-gray-900' : 'text-white',
+    muted: light ? 'text-gray-400' : 'text-gray-500',
+    h1:    light ? 'text-gray-900' : 'text-white',
+  };
+
+  const items = menuGrouped[activeCat] ?? [];
+
+  return (
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex items-center justify-between flex-wrap gap-3">
+        <div>
+          <p className="text-primary text-xs font-bold tracking-[0.3em] uppercase mb-1">Cafe Operations</p>
+          <h2 className={`text-3xl font-black tracking-tight ${tc.h1}`}>
+            MENU <span className="text-primary">MANAGEMENT</span>
+          </h2>
+        </div>
+        <button onClick={() => setAddModal(true)}
+          className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-primary/10 border border-primary/40 text-primary text-sm font-bold tracking-widest uppercase hover:bg-primary/20 hover:shadow-[0_0_16px_rgba(13,242,89,0.2)] transition-all">
+          <span className="material-symbols-outlined text-base">add</span>
+          Add Item
+        </button>
+      </div>
+
+      {/* Category tabs */}
+      <div className={`flex items-center gap-1 p-1 rounded-xl border w-fit ${light ? 'bg-gray-100 border-gray-200' : 'bg-[#0f0f0f] border-[#1a1a1a]'}`}>
+        {CATS.map(cat => {
+          const c = CAT_COLORS[cat];
+          return (
+            <button key={cat} onClick={() => setActiveCat(cat)}
+              className={`px-4 py-1.5 rounded-lg text-xs font-bold tracking-widest uppercase transition-all border ${
+                activeCat === cat
+                  ? `${c.bg} ${c.border} ${c.text}`
+                  : `border-transparent ${tc.muted} hover:text-gray-300`
+              }`}>
+              {cat.charAt(0).toUpperCase() + cat.slice(1)}
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Items table */}
+      <div className={`rounded-2xl overflow-hidden border ${tc.card}`}>
+        <table className="w-full text-sm">
+          <thead>
+            <tr className={tc.th}>
+              {['Item', 'Category', 'Price', 'Sort', 'Available', 'Status', 'Remove'].map(h => (
+                <th key={h} className="px-4 py-3 text-[10px] font-bold tracking-widest uppercase text-left">{h}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {loading ? (
+              <tr><td colSpan={6} className="p-8 text-center">
+                <span className="material-symbols-outlined text-primary text-xl animate-spin">progress_activity</span>
+              </td></tr>
+            ) : items.length === 0 ? (
+              <tr><td colSpan={6} className={`p-8 text-center text-xs ${tc.muted}`}>No items in this category</td></tr>
+            ) : items.map(item => {
+              const c = CAT_COLORS[item.category] || CAT_COLORS.drinks;
+              const isEditingPrice = item.id in editPrice;
+              return (
+                <tr key={item.id} className={tc.tr}>
+                  <td className="px-4 py-3">
+                    <span className={`font-bold text-sm ${item.isAvailable ? tc.td : tc.muted}`}>{item.name}</span>
+                  </td>
+                  <td className="px-4 py-3">
+                    <span className={`text-[9px] font-bold tracking-widest uppercase px-2 py-0.5 rounded-full border ${c.bg} ${c.border} ${c.text}`}>
+                      {item.category}
+                    </span>
+                  </td>
+                  <td className="px-4 py-3">
+                    {isEditingPrice ? (
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-gray-500 text-xs">₹</span>
+                        <input
+                          type="number" min="0"
+                          value={editPrice[item.id]}
+                          onChange={e => setEditPrice(p => ({ ...p, [item.id]: e.target.value }))}
+                          onKeyDown={e => {
+                            if (e.key === 'Enter') handlePriceSave(item);
+                            if (e.key === 'Escape') setEditPrice(p => { const n = { ...p }; delete n[item.id]; return n; });
+                          }}
+                          onBlur={() => handlePriceSave(item)}
+                          autoFocus
+                          className="w-20 bg-black/40 border border-primary/40 rounded-md px-2 py-0.5 text-white text-xs focus:outline-none"
+                        />
+                        {saving === item.id && <span className="material-symbols-outlined text-xs text-primary animate-spin">progress_activity</span>}
+                      </div>
+                    ) : (
+                      <button onClick={() => setEditPrice(p => ({ ...p, [item.id]: String(item.price) }))}
+                        className="text-primary font-bold text-sm hover:underline">
+                        {fmtPrice(item.price)}
+                      </button>
+                    )}
+                  </td>
+                  <td className="px-4 py-3">
+                    <span className={`text-xs ${tc.muted}`}>{item.sortOrder}</span>
+                  </td>
+                  <td className="px-4 py-3">
+                    <button onClick={() => handleToggle(item)}
+                      className={`relative w-10 h-5 rounded-full border transition-all duration-300 ${
+                        item.isAvailable ? 'bg-primary/20 border-primary/50' : 'bg-white/5 border-white/10'
+                      }`}>
+                      <span className={`absolute top-0.5 w-4 h-4 rounded-full transition-all duration-300 ${
+                        item.isAvailable ? 'left-5 bg-primary' : 'left-0.5 bg-gray-600'
+                      }`} />
+                    </button>
+                  </td>
+                  <td className="px-4 py-3">
+                    <span className={`text-[9px] uppercase tracking-widest font-bold ${item.isAvailable ? 'text-primary' : 'text-gray-600'}`}>
+                      {item.isAvailable ? 'In Stock' : 'Out'}
+                    </span>
+                  </td>
+                  {/* Remove */}
+                  <td className="px-4 py-3">
+                    {deleteConfirm === item.id ? (
+                      <div className="flex items-center gap-1.5">
+                        <button onClick={() => handleDelete(item)}
+                          className="px-2 py-1 rounded-md text-[9px] font-black uppercase tracking-widest bg-red-500/15 border border-red-500/40 text-red-400 hover:bg-red-500/25 transition-all">
+                          Confirm
+                        </button>
+                        <button onClick={() => setDeleteConfirm(null)}
+                          className="px-2 py-1 rounded-md text-[9px] font-bold uppercase tracking-widest border border-white/10 text-gray-500 hover:text-gray-300 transition-all">
+                          Cancel
+                        </button>
+                      </div>
+                    ) : (
+                      <button onClick={() => setDeleteConfirm(item.id)}
+                        className="w-7 h-7 rounded-lg flex items-center justify-center border border-white/5 text-gray-600 hover:border-red-500/40 hover:text-red-400 hover:bg-red-500/10 transition-all">
+                        <span className="material-symbols-outlined text-sm">delete</span>
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+
+      {/* GST Card */}
+      <div className={`rounded-xl border p-5 flex items-center justify-between gap-4 ${light ? 'bg-amber-50 border-amber-200' : 'bg-amber-500/5 border-amber-500/20'}`}>
+        <div>
+          <p className="text-[10px] font-bold tracking-widest uppercase text-amber-400 mb-0.5">Tax Settings</p>
+          <p className={`font-black text-base ${tc.h1}`}>GST Configuration</p>
+          {gst && (
+            <p className={`text-xs ${tc.muted} mt-0.5`}>
+              {gst.isInclusive ? 'Inclusive' : 'Exclusive'} · Applied at checkout
+            </p>
+          )}
+        </div>
+        <div className="flex items-center gap-4">
+          {editGst ? (
+            <div className="flex items-center gap-2">
+              <input type="number" min="0" max="100"
+                value={gstDraft}
+                onChange={e => setGstDraft(e.target.value)}
+                onKeyDown={e => { if (e.key === 'Enter') handleGstSave(); if (e.key === 'Escape') setEditGst(false); }}
+                className="w-20 bg-black/40 border border-amber-500/40 rounded-lg px-3 py-1.5 text-white text-sm focus:outline-none"
+                autoFocus
+              />
+              <span className="text-amber-400 text-sm font-bold">%</span>
+              <button onClick={handleGstSave}
+                className="px-3 py-1.5 rounded-lg bg-amber-500/20 border border-amber-500/40 text-amber-400 text-xs font-bold hover:bg-amber-500/30 transition-all">
+                Save
+              </button>
+              <button onClick={() => setEditGst(false)} className={`text-xs ${tc.muted} hover:text-gray-300`}>Cancel</button>
+            </div>
+          ) : (
+            <>
+              <span className="text-3xl font-black text-amber-400">{gst ? `${parseFloat(gst.percentage)}%` : '...'}</span>
+              <button onClick={() => setEditGst(true)}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/10 ${tc.muted} hover:text-white hover:border-white/20 transition-all text-xs font-bold`}>
+                <span className="material-symbols-outlined text-sm">edit</span> Edit
+              </button>
+            </>
+          )}
+        </div>
+      </div>
+
+      {/* Add Item Modal */}
+      {addModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm px-4">
+          <div className="bg-[#0f0f0f] border border-[#1a1a1a] rounded-2xl p-6 w-full max-w-sm shadow-2xl">
+            <div className="flex items-center justify-between mb-5">
+              <h3 className="text-white font-black text-lg">Add Menu Item</h3>
+              <button onClick={() => setAddModal(false)}
+                className="w-8 h-8 rounded-lg border border-white/10 flex items-center justify-center text-gray-500 hover:text-white transition-all">
+                <span className="material-symbols-outlined text-sm">close</span>
+              </button>
+            </div>
+            <div className="space-y-3">
+              {[
+                ['Item Name', 'name', 'text', 'e.g. Mango Shake'],
+                ['Price (₹)',  'price', 'number', 'e.g. 90'],
+                ['Sort Order', 'sortOrder', 'number', 'e.g. 5'],
+              ].map(([label, key, type, ph]) => (
+                <div key={key}>
+                  <label className="block text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-1">{label}</label>
+                  <input type={type} placeholder={ph}
+                    value={addForm[key]}
+                    onChange={e => setAddForm(f => ({ ...f, [key]: e.target.value }))}
+                    className="w-full bg-black/40 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:border-primary outline-none transition-all" />
+                </div>
+              ))}
+              <div>
+                <label className="block text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-1">Category</label>
+                <select value={addForm.category} onChange={e => setAddForm(f => ({ ...f, category: e.target.value }))}
+                  className="w-full bg-black/40 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:border-primary outline-none transition-all">
+                  {CATS.map(c => <option key={c} value={c}>{c.charAt(0).toUpperCase() + c.slice(1)}</option>)}
+                </select>
+              </div>
+              <button onClick={handleAddItem}
+                className="w-full py-3 bg-primary text-black font-black rounded-xl text-sm tracking-widest uppercase hover:shadow-[0_0_20px_rgba(13,242,89,0.3)] transition-all mt-2">
+                Add to Menu
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ── Main Dashboard ────────────────────────────────────────────────────────────
 function Dashboard({ onLock }) {
   const [light, setLight] = useState(false);
+  const [activeTab, setActiveTab] = useState('bookings');
   const [bookings, setBookings] = useState([]);
   const [stats, setStats] = useState(null);
   const [filter, setFilter] = useState('all');
@@ -342,7 +654,30 @@ function Dashboard({ onLock }) {
           </div>
         )}
 
-        {/* Page heading */}
+        {/* ── TAB SWITCHER ── */}
+        <div className={`flex items-center gap-1 p-1 rounded-xl border w-fit ${light ? 'bg-gray-100 border-gray-200' : 'bg-[#0f0f0f] border-[#1a1a1a]'}`}>
+          {[
+            { key: 'bookings', icon: 'table_chart',      label: 'Bookings'      },
+            { key: 'stations', icon: 'grid_view',        label: 'Live Stations' },
+            { key: 'menu',     icon: 'restaurant_menu',  label: 'Menu'          },
+          ].map(({ key, icon, label }) => (
+            <button
+              key={key}
+              onClick={() => setActiveTab(key)}
+              className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold tracking-widest uppercase transition-all ${
+                activeTab === key
+                  ? 'bg-primary/10 border border-primary/40 text-primary shadow-[0_0_10px_rgba(13,242,89,0.15)]'
+                  : light ? 'text-gray-500 hover:text-gray-700' : 'text-gray-500 hover:text-gray-300'
+              }`}
+            >
+              <span className="material-symbols-outlined text-sm">{icon}</span>
+              {label}
+            </button>
+          ))}
+        </div>
+
+        {/* Page heading — Bookings tab only */}
+        {activeTab === 'bookings' && (
         <div className="flex items-end justify-between">
           <div>
             <p className="text-primary text-xs font-bold tracking-[0.3em] uppercase mb-1">Booking Management</p>
@@ -358,24 +693,29 @@ function Dashboard({ onLock }) {
             <span className="text-xs font-bold text-primary tracking-wide">LIVE</span>
           </div>
         </div>
-
-        {/* ── STAT CARDS ── */}
-        {loading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            {[0, 1, 2].map(i => (
-              <div key={i} className={`rounded-xl border p-6 h-24 animate-pulse ${light ? 'bg-gray-100 border-gray-200' : 'bg-card-dark border-white/5'}`} />
-            ))}
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <StatCard icon="confirmation_number" label="Total Bookings" value={stats?.total} accent="green" light={light} />
-            <StatCard icon="pending"             label="Needs Attention" value={stats?.pending} accent="amber" light={light} />
-            <StatCard icon="today"               label="Today's Bookings" value={stats?.todayCount} accent="purple" light={light} />
-          </div>
         )}
 
-        {/* ── FILTER PILLS + TABLE ── */}
-        <div className={`rounded-2xl overflow-hidden ${t.table}`}>
+        {/* ── STAT CARDS — Bookings tab only ── */}
+        {activeTab === 'bookings' && (
+          loading ? (
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              {[0, 1, 2].map(i => (
+                <div key={i} className={`rounded-xl border p-6 h-24 animate-pulse ${light ? 'bg-gray-100 border-gray-200' : 'bg-card-dark border-white/5'}`} />
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <StatCard icon="confirmation_number" label="Total Bookings" value={stats?.total} accent="green" light={light} />
+              <StatCard icon="pending"             label="Needs Attention" value={stats?.pending} accent="amber" light={light} />
+              <StatCard icon="today"               label="Today's Bookings" value={stats?.todayCount} accent="purple" light={light} />
+            </div>
+          )
+        )}
+
+        {/* ── FILTER PILLS + TABLE — Bookings tab only ── */}
+        {activeTab === 'stations' && <LiveStationsSection light={light} />}
+        {activeTab === 'menu'     && <MenuManagement light={light} />}
+        {activeTab === 'bookings' && <div className={`rounded-2xl overflow-hidden ${t.table}`}>
           {/* Table header row */}
           <div className={`px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b ${light ? 'border-gray-100' : 'border-white/5'}`}>
             <div className="flex items-center gap-2">
@@ -516,7 +856,7 @@ function Dashboard({ onLock }) {
               </table>
             </div>
           )}
-        </div>
+        </div>}
 
         {/* Footer note */}
         <p className={`text-center text-xs pb-4 ${t.muted}`}>

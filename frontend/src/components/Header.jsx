@@ -14,6 +14,7 @@ export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
 
+  
   // Close mobile menu on route change
   useEffect(() => {
     setMobileOpen(false);

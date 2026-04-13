@@ -21,6 +21,79 @@ model StationBooking {
   currencyShown String   @default("INR")
   status        String   @default("pending")
   notes         String?  @db.Text
+  stationRefId  Int?
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+}
+
+model Station {
+  id         Int              @id @default(autoincrement())
+  label      String           @unique
+  type       String
+  specs      String
+  hourlyRate Int
+  isActive   Boolean          @default(true)
+  position   Int              @unique
+  room       String           @default("pc-zone")
+  createdAt  DateTime         @default(now())
+  sessions   StationSession[]
+}
+
+model StationSession {
+  id               Int       @id @default(autoincrement())
+  stationId        Int
+  customerName     String
+  phone            String
+  sessionType      String
+  stationBookingId Int?
+  startTime        DateTime  @default(now())
+  endTime          DateTime?
+  plannedDuration  Int
+  pricingINR       Int
+  status           String    @default("active")
+  notes            String?
+  createdAt        DateTime  @default(now())
+
+  station Station @relation(fields: [stationId], references: [id])
+  order   Order?
+}
+
+model MenuItem {
+  id          Int         @id @default(autoincrement())
+  name        String
+  category    String
+  price       Int
+  isAvailable Boolean     @default(true)
+  sortOrder   Int         @default(0)
+  createdAt   DateTime    @default(now())
+  orderItems  OrderItem[]
+}
+
+model Order {
+  id        Int            @id @default(autoincrement())
+  sessionId Int            @unique
+  status    String         @default("open")
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  session   StationSession @relation(fields: [sessionId], references: [id])
+  items     OrderItem[]
+}
+
+model OrderItem {
+  id          Int       @id @default(autoincrement())
+  orderId     Int
+  menuItemId  Int
+  quantity    Int       @default(1)
+  priceAtTime Int
+  removedAt   DateTime?
+  addedAt     DateTime  @default(now())
+  order       Order     @relation(fields: [orderId], references: [id])
+  menuItem    MenuItem  @relation(fields: [menuItemId], references: [id])
+}
+
+model GSTConfig {
+  id          Int      @id @default(1)
+  percentage  Decimal  @default(18.00)
+  isInclusive Boolean  @default(false)
+  updatedAt   DateTime @updatedAt
 }
