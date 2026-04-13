@@ -80,6 +80,9 @@ function StationCard({ station, onStartSession, onEndSession, onToggleActive, on
   const textMutedClass = light ? 'text-gray-500' : 'text-gray-400';
   const textFaintClass = light ? 'text-gray-400' : 'text-gray-600';
 
+  // Always call hook at top level
+  const { isOvertime } = useElapsed(activeSession?.startTime, activeSession?.plannedDuration);
+
   // ── INACTIVE ─────────────────────────────────────────────────────────────
   if (!isActive) {
     return (
@@ -106,16 +109,7 @@ function StationCard({ station, onStartSession, onEndSession, onToggleActive, on
   // ── OCCUPIED ─────────────────────────────────────────────────────────────
   if (activeSession) {
     const isMaintenance = activeSession.sessionType === 'maintenance';
-    // Determine live overtime for border override
-    const OvertimeBorderWrapper = ({ children }) => {
-      const { isOvertime } = useElapsed(activeSession.startTime, activeSession.plannedDuration);
-      const border = isMaintenance ? (light ? 'border-amber-400' : 'border-amber-500/30') : isOvertime ? (light ? 'border-red-400' : 'border-red-500/50') : (light ? 'border-primary/40 shadow-sm' : 'border-primary/30');
-      return (
-        <div className={`rounded-xl border ${border} ${bgClass} p-3 flex flex-col gap-2 transition-colors`}>
-          {children}
-        </div>
-      );
-    };
+    const border = isMaintenance ? (light ? 'border-amber-400' : 'border-amber-500/30') : isOvertime ? (light ? 'border-red-400' : 'border-red-500/50') : (light ? 'border-primary/40 shadow-sm' : 'border-primary/30');
 
     let timeRange = '';
     if (!isMaintenance && activeSession.startTime && activeSession.plannedDuration) {
@@ -126,7 +120,7 @@ function StationCard({ station, onStartSession, onEndSession, onToggleActive, on
     }
 
     return (
-      <OvertimeBorderWrapper>
+      <div className={`rounded-xl border ${border} ${bgClass} p-3 flex flex-col gap-2 transition-colors`}>
         <div className="flex items-center justify-between">
           <span className={`text-sm font-black tracking-widest ${textTitleClass}`}>{label}</span>
           <span className={`material-symbols-outlined text-base ${isMaintenance ? 'text-amber-500' : 'text-primary'}`}>{icon}</span>
@@ -176,7 +170,7 @@ function StationCard({ station, onStartSession, onEndSession, onToggleActive, on
             light={light}
           />
         )}
-      </OvertimeBorderWrapper>
+      </div>
     );
   }
 
