@@ -12,7 +12,7 @@ function authHeaders() {
 function fmt(n) { return Number(n).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
 
 // ── Bill View ─────────────────────────────────────────────────────────────────
-function BillView({ bill, orderId, sessionId, onPaid, onBack }) {
+function BillView({ bill, orderId, sessionId, onPaid, onBack, readOnly }) {
   const [paying, setPaying] = useState(false);
 
   async function handlePaid() {
@@ -38,7 +38,11 @@ function BillView({ bill, orderId, sessionId, onPaid, onBack }) {
       <div className="flex items-center justify-between mb-4">
         <p className="text-[10px] font-bold tracking-widest uppercase text-primary">Final Bill</p>
         <button onClick={onBack} className="text-[10px] text-gray-500 hover:text-gray-300 flex items-center gap-1">
-          <span className="material-symbols-outlined text-sm">arrow_back</span> Back to Order
+          {readOnly ? (
+            <><span className="material-symbols-outlined text-sm">close</span> Close</>
+          ) : (
+            <><span className="material-symbols-outlined text-sm">arrow_back</span> Back to Order</>
+          )}
         </button>
       </div>
 
@@ -111,20 +115,28 @@ function BillView({ bill, orderId, sessionId, onPaid, onBack }) {
 
       {/* Actions */}
       <div className="flex gap-2 mt-4">
-        <button onClick={onBack} className="flex-1 py-2.5 rounded-xl text-xs font-bold border border-white/10 text-gray-400 hover:border-white/20 hover:text-white transition-all tracking-widest uppercase">
-          Back to Order
-        </button>
-        <button onClick={handlePaid} disabled={paying}
-          className="flex-1 py-2.5 rounded-xl text-xs font-black bg-primary text-black hover:shadow-[0_0_20px_rgba(13,242,89,0.35)] transition-all tracking-widest uppercase disabled:opacity-40">
-          {paying ? 'Processing...' : 'Mark as Paid ✓'}
-        </button>
+        {readOnly ? (
+          <button onClick={onBack} className="flex-1 py-2.5 rounded-xl text-xs font-bold border border-white/10 text-gray-400 hover:border-white/20 hover:text-white transition-all tracking-widest uppercase">
+            Close Bill
+          </button>
+        ) : (
+          <>
+            <button onClick={onBack} className="flex-1 py-2.5 rounded-xl text-xs font-bold border border-white/10 text-gray-400 hover:border-white/20 hover:text-white transition-all tracking-widest uppercase">
+              Back to Order
+            </button>
+            <button onClick={handlePaid} disabled={paying}
+              className="flex-1 py-2.5 rounded-xl text-xs font-black bg-primary text-black hover:shadow-[0_0_20px_rgba(13,242,89,0.35)] transition-all tracking-widest uppercase disabled:opacity-40">
+              {paying ? 'Processing...' : 'Mark as Paid ✓'}
+            </button>
+          </>
+        )}
       </div>
     </div>
   );
 }
 
 // ── Order Screen ──────────────────────────────────────────────────────────────
-export default function OrderScreen({ session, stationLabel, onClose, onSessionEnded }) {
+export default function OrderScreen({ session, stationLabel, onClose, onSessionEnded, readOnly }) {
   const { id: sessionId, customerName } = session;
 
   const [menuGrouped, setMenuGrouped] = useState({});
@@ -138,11 +150,12 @@ export default function OrderScreen({ session, stationLabel, onClose, onSessionE
 
   //── Fetch menu once ──
   useEffect(() => {
+    if (readOnly) return; // skip if readonly
     fetch(`${API}/menu`, { headers: authHeaders() })
       .then(r => r.json())
       .then(data => { setMenuGrouped(data); setLoading(l => ({ ...l, menu: false })); })
       .catch(() => setLoading(l => ({ ...l, menu: false })));
-  }, []);
+  }, [readOnly]);
 
   // ── Fetch / create order ──
   const fetchOrder = useCallback(async () => {
@@ -190,18 +203,47 @@ export default function OrderScreen({ session, stationLabel, onClose, onSessionE
   }
 
   // ── Generate bill ──
-  async function handleGenerateBill() {
+  const handleGenerateBill = useCallback(async () => {
     setBillingLoading(true);
     try {
       const res = await fetch(`${API}/bill/session/${sessionId}`, { headers: authHeaders() });
       const data = await res.json();
       setBill(data);
     } finally { setBillingLoading(false); }
-  }
+  }, [sessionId]);
+
+  useEffect(() => {
+    if (readOnly) handleGenerateBill();
+  }, [readOnly, handleGenerateBill]);
 
   const activeItems = order?.items ?? [];
   const qtyMap = Object.fromEntries(activeItems.map(i => [i.menuItemId, { qty: i.quantity, itemId: i.id }]));
   const menuItems = menuGrouped[activeCat] ?? [];
+
+  if (readOnly) {
+    return (
+      <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div className="absolute inset-0" onClick={onClose} />
+        
+        <div className="relative w-full max-w-sm bg-[#0f0f0f] border border-[#1a1a1a] rounded-2xl p-5 shadow-2xl flex flex-col max-h-[90vh]">
+          {!bill ? (
+            <div className="flex flex-col items-center justify-center py-20 gap-3">
+              <span className="material-symbols-outlined text-primary text-3xl animate-spin">progress_activity</span>
+              <p className="text-xs font-bold tracking-widest uppercase text-gray-400">Loading Bill...</p>
+            </div>
+          ) : (
+            <BillView
+              bill={bill}
+              orderId={orderId}
+              sessionId={sessionId}
+              onBack={onClose}
+              readOnly={true}
+            />
+          )}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-stretch justify-end">

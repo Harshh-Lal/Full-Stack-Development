@@ -31,30 +31,30 @@ function useElapsed(startTime, plannedDuration) {
 }
 
 // ── Timer Badge — large clock shown below End Session button ──────────────────
-function TimerBadge({ startTime, plannedDuration, compact = false }) {
+function TimerBadge({ startTime, plannedDuration, compact = false, light = false }) {
   const { display, isOvertime } = useElapsed(startTime, plannedDuration);
   if (!display) return null;
   if (compact) {
     return (
-      <div className={`flex items-center justify-center gap-1.5 py-1 rounded-lg ${isOvertime ? 'bg-red-500/10' : 'bg-black/30'}`}>
+      <div className={`flex items-center justify-center gap-1.5 py-1 rounded-lg ${isOvertime ? 'bg-red-500/10' : light ? 'bg-black/5' : 'bg-black/30'}`}>
         <span className={`font-mono font-black text-sm tabular-nums tracking-wider ${isOvertime ? 'text-red-400' : 'text-primary'}`}>
           {display}
         </span>
-        {isOvertime && <span className="text-[8px] font-black tracking-widest text-red-400 uppercase">OT</span>}
+        {isOvertime && <span className="text-[8px] font-black tracking-widest text-red-500 uppercase">OT</span>}
       </div>
     );
   }
   return (
     <div className={`mt-1 flex items-center justify-between px-3 py-2 rounded-lg border ${
-      isOvertime ? 'border-red-500/30 bg-red-500/8' : 'border-primary/15 bg-primary/5'
+      isOvertime ? 'border-red-500/30 bg-red-500/8' : light ? 'border-primary/20 bg-primary/5' : 'border-primary/15 bg-primary/5'
     }`}>
       <div className="flex items-center gap-1.5">
-        <span className={`material-symbols-outlined text-sm ${isOvertime ? 'text-red-400' : 'text-primary'}`}>timer</span>
-        <span className={`text-[9px] font-bold tracking-widest uppercase ${isOvertime ? 'text-red-400' : 'text-primary'}`}>
+        <span className={`material-symbols-outlined text-sm ${isOvertime ? 'text-red-500' : 'text-primary'}`}>timer</span>
+        <span className={`text-[9px] font-bold tracking-widest uppercase ${isOvertime ? 'text-red-500' : 'text-primary'}`}>
           {isOvertime ? 'OVERTIME' : 'ELAPSED'}
         </span>
       </div>
-      <span className={`font-mono font-black text-xl tabular-nums tracking-widest ${isOvertime ? 'text-red-400' : 'text-primary'}`}>
+      <span className={`font-mono font-black text-xl tabular-nums tracking-widest ${isOvertime ? 'text-red-500' : 'text-primary'}`}>
         {display}
       </span>
     </div>
@@ -62,35 +62,41 @@ function TimerBadge({ startTime, plannedDuration, compact = false }) {
 }
 
 // ── Card border colour helper ─────────────────────────────────────────────────
-function useCardBorder(station) {
+function useCardBorder(station, light) {
   const { isActive, activeSession } = station;
-  if (!isActive) return 'border-white/5';
-  if (!activeSession) return 'border-[#1a1a1a]';
-  if (activeSession.sessionType === 'maintenance') return 'border-amber-500/30';
+  if (!isActive) return light ? 'border-gray-200' : 'border-white/5';
+  if (!activeSession) return light ? 'border-gray-200' : 'border-[#1a1a1a]';
+  if (activeSession.sessionType === 'maintenance') return 'border-amber-500/40';
   return 'border-primary/30'; // green = active; will be overridden to red in overtime by TimerBadge colouring
 }
 
 // ── Shared StationCard — used by both Grid and Floor views ───────────────────
-function StationCard({ station, onStartSession, onEndSession, onToggleActive, onViewOrder, compact = false }) {
+function StationCard({ station, onStartSession, onEndSession, onToggleActive, onViewOrder, compact = false, light = false }) {
   const { label, type, specs, hourlyRate, isActive, activeSession } = station;
   const icon = type === 'ps5' ? 'sports_esports' : 'computer';
-  const borderBase = useCardBorder(station);
+  const borderBase = useCardBorder(station, light);
+  const bgClass = light ? 'bg-white shadow-sm' : 'bg-[#0f0f0f]';
+  const textTitleClass = light ? 'text-gray-800' : 'text-white';
+  const textMutedClass = light ? 'text-gray-500' : 'text-gray-400';
+  const textFaintClass = light ? 'text-gray-400' : 'text-gray-600';
 
   // ── INACTIVE ─────────────────────────────────────────────────────────────
   if (!isActive) {
     return (
-      <div className={`rounded-xl border ${borderBase} bg-[#0f0f0f] p-3 flex flex-col gap-2 opacity-55`}>
+      <div className={`rounded-xl border ${borderBase} ${bgClass} p-3 flex flex-col gap-2 opacity-55`}>
         <div className="flex items-center justify-between">
-          <span className="text-sm font-black tracking-widest text-gray-500">{label}</span>
-          <span className="material-symbols-outlined text-gray-600 text-base">{icon}</span>
+          <span className={`text-sm font-black tracking-widest ${textMutedClass}`}>{label}</span>
+          <span className={`material-symbols-outlined text-base ${textFaintClass}`}>{icon}</span>
         </div>
-        {!compact && <p className="text-[9px] text-gray-600 leading-snug">{specs}</p>}
+        {!compact && <p className={`text-[9px] leading-snug ${textFaintClass}`}>{specs}</p>}
         <div className="flex items-center gap-1.5 mt-auto">
-          <span className="w-1.5 h-1.5 rounded-full bg-gray-600 inline-block" />
-          <span className="text-[9px] font-bold tracking-widest uppercase text-gray-500">UNAVAILABLE</span>
+          <span className={`w-1.5 h-1.5 rounded-full inline-block ${light ? 'bg-gray-400' : 'bg-gray-600'}`} />
+          <span className={`text-[9px] font-bold tracking-widest uppercase ${textMutedClass}`}>UNAVAILABLE</span>
         </div>
         <button onClick={() => onToggleActive(station.id, true)}
-          className="w-full py-1.5 rounded-lg text-[9px] font-bold tracking-widest uppercase border border-white/10 text-gray-400 hover:border-primary/40 hover:text-primary transition-all">
+          className={`w-full py-1.5 rounded-lg text-[9px] font-bold tracking-widest uppercase border transition-all ${
+            light ? 'border-gray-200 text-gray-500 hover:border-primary/40 hover:text-primary' : 'border-white/10 text-gray-400 hover:border-primary/40 hover:text-primary'
+          }`}>
           Re-enable
         </button>
       </div>
@@ -103,42 +109,60 @@ function StationCard({ station, onStartSession, onEndSession, onToggleActive, on
     // Determine live overtime for border override
     const OvertimeBorderWrapper = ({ children }) => {
       const { isOvertime } = useElapsed(activeSession.startTime, activeSession.plannedDuration);
-      const border = isMaintenance ? 'border-amber-500/30' : isOvertime ? 'border-red-500/50' : 'border-primary/30';
+      const border = isMaintenance ? (light ? 'border-amber-400' : 'border-amber-500/30') : isOvertime ? (light ? 'border-red-400' : 'border-red-500/50') : (light ? 'border-primary/40 shadow-sm' : 'border-primary/30');
       return (
-        <div className={`rounded-xl border ${border} bg-[#0f0f0f] p-3 flex flex-col gap-2 transition-colors`}>
+        <div className={`rounded-xl border ${border} ${bgClass} p-3 flex flex-col gap-2 transition-colors`}>
           {children}
         </div>
       );
     };
+
+    let timeRange = '';
+    if (!isMaintenance && activeSession.startTime && activeSession.plannedDuration) {
+      const s = new Date(activeSession.startTime);
+      const e = new Date(s.getTime() + activeSession.plannedDuration * 3600000);
+      const f = new Intl.DateTimeFormat('en-IN', { hour: 'numeric', minute: '2-digit', hour12: true });
+      timeRange = `${f.format(s).replace(/\s/g, '').toLowerCase()} to ${f.format(e).replace(/\s/g, '').toLowerCase()}`;
+    }
+
     return (
       <OvertimeBorderWrapper>
         <div className="flex items-center justify-between">
-          <span className="text-sm font-black tracking-widest text-white">{label}</span>
-          <span className={`material-symbols-outlined text-base ${isMaintenance ? 'text-amber-400' : 'text-primary'}`}>{icon}</span>
+          <span className={`text-sm font-black tracking-widest ${textTitleClass}`}>{label}</span>
+          <span className={`material-symbols-outlined text-base ${isMaintenance ? 'text-amber-500' : 'text-primary'}`}>{icon}</span>
         </div>
         {isMaintenance ? (
           <div className="flex items-center gap-1.5">
-            <span className="animate-pulse w-1.5 h-1.5 rounded-full bg-amber-400 inline-block" />
-            <span className="text-[9px] font-bold tracking-widest uppercase text-amber-400">MAINTENANCE</span>
+            <span className="animate-pulse w-1.5 h-1.5 rounded-full bg-amber-500 inline-block" />
+            <span className="text-[9px] font-bold tracking-widest uppercase text-amber-500">MAINTENANCE</span>
           </div>
         ) : (
           <>
-            <p className="text-xs font-bold text-white truncate">{activeSession.customerName}</p>
-            {!compact && <p className="text-[9px] text-gray-400">{activeSession.phone}</p>}
+            <div className="flex items-center justify-between">
+              <p className={`text-xs font-bold truncate ${textTitleClass}`}>{activeSession.customerName}</p>
+              {!compact && (
+                <span className={`text-[9px] font-bold tracking-wider ${light ? 'text-gray-500 bg-gray-100' : 'text-gray-400 bg-white/5'} px-1.5 py-0.5 rounded`}>
+                  {timeRange}
+                </span>
+              )}
+            </div>
+            {!compact && <p className={`text-[9px] ${textMutedClass}`}>{activeSession.phone}</p>}
             <div className="flex items-center gap-1.5">
               <span className="animate-pulse w-1.5 h-1.5 rounded-full bg-primary inline-block" />
               <span className="text-[9px] font-bold tracking-widest uppercase text-primary">ACTIVE</span>
-              {!compact && <span className="text-[9px] text-gray-500">· Plan {activeSession.plannedDuration}h · ₹{activeSession.pricingINR}</span>}
+              {!compact && <span className={`text-[9px] ${textMutedClass}`}>· {activeSession.plannedDuration}h Plan · ₹{activeSession.pricingINR}</span>}
             </div>
           </>
         )}
         <button onClick={() => onEndSession(activeSession, label)}
-          className="w-full py-1.5 rounded-lg text-[9px] font-bold tracking-widest uppercase border border-red-500/40 text-red-400 hover:bg-red-500/10 transition-all">
+          className={`w-full py-1.5 rounded-lg text-[9px] font-bold tracking-widest uppercase border transition-all ${
+            light ? 'border-red-400 text-red-500 hover:bg-red-50' : 'border-red-500/40 text-red-400 hover:bg-red-500/10'
+          }`}>
           End Session
         </button>
         {!isMaintenance && (
           <button onClick={() => onViewOrder(activeSession, label)}
-            className="w-full py-1.5 rounded-lg text-[9px] font-bold tracking-widest uppercase border border-primary/30 text-primary hover:bg-primary/10 transition-all flex items-center justify-center gap-1">
+            className={`w-full py-1.5 rounded-lg text-[9px] font-bold tracking-widest uppercase border border-primary/30 text-primary hover:bg-primary/10 transition-all flex items-center justify-center gap-1`}>
             <span className="material-symbols-outlined text-xs">receipt_long</span>
             View Order
           </button>
@@ -149,6 +173,7 @@ function StationCard({ station, onStartSession, onEndSession, onToggleActive, on
             startTime={activeSession.startTime}
             plannedDuration={activeSession.plannedDuration}
             compact={compact}
+            light={light}
           />
         )}
       </OvertimeBorderWrapper>
@@ -157,28 +182,30 @@ function StationCard({ station, onStartSession, onEndSession, onToggleActive, on
 
   // ── AVAILABLE ─────────────────────────────────────────────────────────────
   return (
-    <div className={`rounded-xl border ${borderBase} bg-[#0f0f0f] p-3 flex flex-col gap-2 hover:border-primary/20 transition-all`}>
+    <div className={`rounded-xl border ${borderBase} ${bgClass} p-3 flex flex-col gap-2 hover:border-primary/40 transition-all`}>
       <div className="flex items-center justify-between">
-        <span className="text-sm font-black tracking-widest text-[#0df259]">{label}</span>
+        <span className={`text-sm font-black tracking-widest ${light ? 'text-[#0ca73e]' : 'text-[#0df259]'}`}>{label}</span>
         <span className="material-symbols-outlined text-primary text-base">{icon}</span>
       </div>
       {!compact && (
         <span className={`self-start text-[8px] font-bold tracking-widest uppercase px-2 py-0.5 rounded-full border ${
-          type === 'ps5' ? 'border-purple-500/40 text-purple-400 bg-purple-500/10' : 'border-primary/30 text-primary bg-primary/10'
+          type === 'ps5' ? 'border-purple-500/40 text-purple-600 bg-purple-500/10' : 'border-primary/30 text-primary bg-primary/10'
         }`}>{type.toUpperCase()}</span>
       )}
-      {!compact && <p className="text-[9px] text-gray-500 leading-snug">{specs}</p>}
-      <p className="text-[9px] text-gray-400">₹{hourlyRate}/hr</p>
+      {!compact && <p className={`text-[9px] leading-snug ${textMutedClass}`}>{specs}</p>}
+      <p className={`text-[9px] ${textMutedClass}`}>₹{hourlyRate}/hr</p>
       <div className="flex items-center gap-1.5 mt-auto">
-        <span className="w-1.5 h-1.5 rounded-full bg-[#0df259] inline-block" />
-        <span className="text-[9px] font-bold tracking-widest uppercase text-[#0df259]">AVAILABLE</span>
+        <span className={`w-1.5 h-1.5 rounded-full inline-block ${light ? 'bg-[#0ca73e]' : 'bg-[#0df259]'}`} />
+        <span className={`text-[9px] font-bold tracking-widest uppercase ${light ? 'text-[#0ca73e]' : 'text-[#0df259]'}`}>AVAILABLE</span>
       </div>
       <button onClick={() => onStartSession(station)}
         className="w-full py-1.5 rounded-lg text-[9px] font-bold tracking-widest uppercase bg-primary/10 border border-primary/40 text-primary hover:bg-primary/20 hover:shadow-[0_0_12px_rgba(13,242,89,0.15)] transition-all">
         Start Session
       </button>
       <button onClick={() => onToggleActive(station.id, false)}
-        className="w-full py-1 rounded-lg text-[8px] font-bold tracking-widest uppercase border border-white/5 text-gray-600 hover:border-amber-500/30 hover:text-amber-500 transition-all">
+        className={`w-full py-1 rounded-lg text-[8px] font-bold tracking-widest uppercase border transition-all ${
+          light ? 'border-gray-200 text-gray-500 hover:border-amber-300 hover:text-amber-500 hover:bg-amber-50' : 'border-white/5 text-gray-600 hover:border-amber-500/30 hover:text-amber-500'
+        }`}>
         Mark Unavailable
       </button>
     </div>
@@ -187,12 +214,17 @@ function StationCard({ station, onStartSession, onEndSession, onToggleActive, on
 
 // ── Floor Layout View — mirrors physical cafe layout ─────────────────────────
 // Left: PCs in 2 columns × 5 rows | Right: PS5s in a column
-function FloorLayoutView({ pcs, ps5s, cardProps }) {
+function FloorLayoutView({ pcs, ps5s, cardProps, light }) {
+  const bgClass = light ? 'bg-gray-50 border-gray-200 shadow-inner' : 'bg-[#080808] border-[#1a1a1a]';
+  const labelMutedClass = light ? 'text-gray-500' : 'text-gray-600';
+  const labelTitleClass = light ? 'text-gray-700' : 'text-gray-400';
+  const dividerClass = light ? 'bg-gray-200' : 'bg-[#1a1a1a]';
+  
   return (
-    <div className="rounded-2xl border border-[#1a1a1a] bg-[#080808] p-6">
+    <div className={`rounded-2xl border ${bgClass} p-6`}>
       {/* Room label header */}
       <div className="flex items-center gap-2 mb-1">
-        <span className="text-[9px] font-bold tracking-[0.3em] uppercase text-gray-600">CAFE FLOOR PLAN</span>
+        <span className={`text-[9px] font-bold tracking-[0.3em] uppercase ${labelMutedClass}`}>CAFE FLOOR PLAN</span>
       </div>
 
       <div className="flex gap-6 items-start">
@@ -200,53 +232,53 @@ function FloorLayoutView({ pcs, ps5s, cardProps }) {
         <div className="flex-1">
           <div className="flex items-center gap-2 mb-3">
             <span className="material-symbols-outlined text-primary text-sm">computer</span>
-            <span className="text-[10px] font-bold tracking-widest uppercase text-gray-400">PC Zone</span>
-            <div className="flex-1 h-px bg-white/5" />
-            <span className="text-[9px] text-gray-600">{pcs.filter(s => s.activeSession).length}/{pcs.length}</span>
+            <span className={`text-[10px] font-bold tracking-widest uppercase ${labelTitleClass}`}>PC Zone</span>
+            <div className={`flex-1 h-px ${dividerClass}`} />
+            <span className={`text-[9px] ${labelMutedClass}`}>{pcs.filter(s => s.activeSession).length}/{pcs.length}</span>
           </div>
           {/* 2-col × 5-row grid */}
           <div className="grid grid-cols-2 gap-2">
             {pcs.map(s => (
-              <StationCard key={s.id} station={s} {...cardProps} compact />
+              <StationCard key={s.id} station={s} {...cardProps} compact light={light} />
             ))}
           </div>
         </div>
 
         {/* Divider wall */}
-        <div className="flex-none w-px self-stretch bg-[#1a1a1a] relative">
+        <div className={`flex-none w-px self-stretch relative ${dividerClass}`}>
           <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-3 flex flex-col justify-center items-center gap-1">
-            <span className="w-1 h-1 rounded-full bg-[#1a1a1a]" />
-            <span className="w-1 h-1 rounded-full bg-[#1a1a1a]" />
-            <span className="w-1 h-1 rounded-full bg-[#1a1a1a]" />
+            <span className={`w-1 h-1 rounded-full ${dividerClass}`} />
+            <span className={`w-1 h-1 rounded-full ${dividerClass}`} />
+            <span className={`w-1 h-1 rounded-full ${dividerClass}`} />
           </div>
         </div>
 
         {/* ── Console Zone (right) ── */}
         <div className="w-44">
           <div className="flex items-center gap-2 mb-3">
-            <span className="material-symbols-outlined text-purple-400 text-sm">sports_esports</span>
-            <span className="text-[10px] font-bold tracking-widest uppercase text-gray-400">Console</span>
+            <span className="material-symbols-outlined text-purple-500 text-sm">sports_esports</span>
+            <span className={`text-[10px] font-bold tracking-widest uppercase ${labelTitleClass}`}>Console</span>
           </div>
           <div className="flex flex-col gap-2">
             {ps5s.map(s => (
-              <StationCard key={s.id} station={s} {...cardProps} compact />
+              <StationCard key={s.id} station={s} {...cardProps} compact light={light} />
             ))}
           </div>
         </div>
       </div>
 
       {/* Legend */}
-      <div className="flex items-center gap-4 mt-5 pt-4 border-t border-[#1a1a1a]">
+      <div className={`flex items-center gap-4 mt-5 pt-4 border-t ${dividerClass}`}>
         {[
           { color: 'bg-[#0df259]', label: 'Available' },
           { color: 'bg-primary border border-primary/50', label: 'Active' },
           { color: 'bg-red-500', label: 'Overtime' },
           { color: 'bg-amber-400', label: 'Maintenance' },
-          { color: 'bg-gray-700', label: 'Unavailable' },
+          { color: light ? 'bg-gray-400' : 'bg-gray-700', label: 'Unavailable' },
         ].map(({ color, label }) => (
           <div key={label} className="flex items-center gap-1.5">
             <span className={`w-2 h-2 rounded-full ${color} inline-block`} />
-            <span className="text-[9px] text-gray-500 uppercase tracking-widest">{label}</span>
+            <span className={`text-[9px] uppercase tracking-widest ${labelMutedClass}`}>{label}</span>
           </div>
         ))}
       </div>
@@ -493,7 +525,7 @@ export default function LiveStationsSection({ light }) {
           ))}
         </div>
       ) : viewMode === 'floor' ? (
-        <FloorLayoutView pcs={pcs} ps5s={ps5s} cardProps={cardProps} />
+        <FloorLayoutView pcs={pcs} ps5s={ps5s} cardProps={cardProps} light={light} />
       ) : (
         /* ── Grid View ── */
         <div className="space-y-8">
@@ -506,7 +538,7 @@ export default function LiveStationsSection({ light }) {
               <span className={`text-[10px] ${muted}`}>{pcs.filter(s => s.activeSession).length}/{pcs.length} occupied</span>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
-              {pcs.map(s => <StationCard key={s.id} station={s} {...cardProps} />)}
+              {pcs.map(s => <StationCard key={s.id} station={s} {...cardProps} light={light} />)}
             </div>
           </div>
           {/* Console Zone */}
@@ -518,7 +550,7 @@ export default function LiveStationsSection({ light }) {
               <span className={`text-[10px] ${muted}`}>{ps5s.filter(s => s.activeSession).length}/{ps5s.length} occupied</span>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
-              {ps5s.map(s => <StationCard key={s.id} station={s} {...cardProps} />)}
+              {ps5s.map(s => <StationCard key={s.id} station={s} {...cardProps} light={light} />)}
             </div>
           </div>
         </div>

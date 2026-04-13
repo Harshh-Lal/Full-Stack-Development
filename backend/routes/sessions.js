@@ -28,6 +28,28 @@ router.get('/active', async (req, res) => {
   }
 })
 
+// ── GET /api/sessions/history ─────────────────────────────────────────────────
+// Returns completed/forcedend sessions ordered by endTime descending.
+router.get('/history', async (req, res) => {
+  try {
+    const sessions = await prisma.stationSession.findMany({
+      where:   { status: { in: ['completed', 'forcedend'] } },
+      orderBy: { endTime: 'desc' },
+      take: 100, // Limit to 100 recent for performance, could add pagination later
+      include: {
+        station: {
+          select: { label: true, type: true },
+        },
+      },
+    })
+    return res.json(sessions)
+  } catch (err) {
+    console.error('[GET /api/sessions/history]', err)
+    return res.status(500).json({ error: 'Failed to fetch session history' })
+  }
+})
+
+
 // ── POST /api/sessions ────────────────────────────────────────────────────────
 // Starts a new session on the given station.
 // Returns 409 if the station already has an active session.

@@ -415,7 +415,7 @@ export default function Tournament() {
     <main className="relative bg-bg-dark min-h-screen">
 
       {/* ─── HERO BANNER ─── */}
-      <section className="pt-5 relative min-h-[65vh] flex items-center justify-center overflow-hidden">
+      <section className="pt-20 sm:pt-25 relative min-h-[65vh] flex items-center justify-center overflow-hidden">
         {/* Background */}
         <div className="absolute inset-0 bg-bg-dark">
           <div className="absolute inset-0 bg-grid-pattern opacity-20" />

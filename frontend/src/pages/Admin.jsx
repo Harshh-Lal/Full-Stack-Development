@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import LiveStationsSection from './LiveStations.jsx';
-
+import SessionHistory from './SessionHistory.jsx';
 
 const API = 'http://localhost:5000/api';
 const CATS = ['drinks', 'snacks', 'meals', 'desserts'];
@@ -660,6 +660,7 @@ function Dashboard({ onLock }) {
             { key: 'bookings', icon: 'table_chart',      label: 'Bookings'      },
             { key: 'stations', icon: 'grid_view',        label: 'Live Stations' },
             { key: 'menu',     icon: 'restaurant_menu',  label: 'Menu'          },
+            { key: 'history',  icon: 'history',          label: 'History'       },
           ].map(({ key, icon, label }) => (
             <button
               key={key}
@@ -715,6 +716,7 @@ function Dashboard({ onLock }) {
         {/* ── FILTER PILLS + TABLE — Bookings tab only ── */}
         {activeTab === 'stations' && <LiveStationsSection light={light} />}
         {activeTab === 'menu'     && <MenuManagement light={light} />}
+        {activeTab === 'history'  && <SessionHistory light={light} />}
         {activeTab === 'bookings' && <div className={`rounded-2xl overflow-hidden ${t.table}`}>
           {/* Table header row */}
           <div className={`px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b ${light ? 'border-gray-100' : 'border-white/5'}`}>

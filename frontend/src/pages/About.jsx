@@ -93,7 +93,7 @@ export default function About() {
   });
 
   return (
-    <main className="relative bg-bg-dark text-white overflow-hidden">
+    <main className="relative bg-bg-dark text-white overflow-hidden pt-10 sm:pt-15">
       <motion.div
         style={{ scaleX }}
         className="fixed top-0 left-0 right-0 h-1 bg-primary origin-left z-[60]"
