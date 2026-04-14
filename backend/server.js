@@ -30,5 +30,5 @@ app.use('/api/gst',      gstRoutes)
 // ── Health check ─────────────────────────────────────────────────
 app.get('/api/health', (_req, res) => res.json({ status: 'ok', service: 'LevelUp API' }))
 
-const PORT = process.env.PORT || 5001
+const PORT = process.env.PORT || 5000
 app.listen(PORT, () => console.log(`🎮 LevelUp API running on port ${PORT}`))
