@@ -5,7 +5,7 @@ import { adminAuth } from '../middleware/adminAuth.js'
 const router = Router()
 const prisma = new PrismaClient()
 
-const CATEGORIES = ['drinks', 'snacks', 'meals', 'desserts']
+const CATEGORIES = ['beverages', 'mojitos', 'burgers', 'pizzas', 'special_pizzas', 'subs', 'jain']
 
 // ── GET /api/menu — grouped by category, sorted by sortOrder ─────────────────
 router.get('/', async (req, res) => {

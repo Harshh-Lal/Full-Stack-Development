@@ -1,8 +1,25 @@
 import { useState, useEffect, useCallback } from 'react';
 
 const API = 'http://localhost:5000/api';
-const CATS = ['drinks', 'snacks', 'meals', 'desserts'];
-const CAT_ICONS = { drinks: 'local_cafe', snacks: 'fastfood', meals: 'dinner_dining', desserts: 'icecream' };
+const CATS = ['beverages', 'mojitos', 'burgers', 'pizzas', 'special_pizzas', 'subs', 'jain'];
+const CAT_ICONS = {
+  beverages:      'local_cafe',
+  mojitos:        'local_bar',
+  burgers:        'lunch_dining',
+  pizzas:         'local_pizza',
+  special_pizzas: 'workspace_premium',
+  subs:           'kebab_dining',
+  jain:           'eco',
+};
+const CAT_LABELS = {
+  beverages:      'Beverages',
+  mojitos:        "Mojito's",
+  burgers:        'Burgers',
+  pizzas:         'Pizzas',
+  special_pizzas: 'Special Pizzas',
+  subs:           'Subs & Frankies',
+  jain:           'Jain Menu',
+};
 
 function getToken() { return sessionStorage.getItem('lu_admin_token'); }
 function authHeaders() {
@@ -43,16 +60,16 @@ function BillView({ bill, orderId, sessionId, onPaid, onBack, readOnly }) {
           ) : (
             <><span className="material-symbols-outlined text-sm">arrow_back</span> Back to Order</>
           )}
-        </button>
-      </div>
+        </button >
+      </div >
 
-      {/* Bill receipt */}
-      <div className="flex-1 overflow-y-auto font-mono text-xs space-y-0 bg-black/40 rounded-xl border border-[#1a1a1a] p-4">
-        {/* Header */}
-        <div className="text-center mb-3">
+    {/* Bill receipt */ }
+    < div className = "flex-1 overflow-y-auto font-mono text-xs space-y-0 bg-black/40 rounded-xl border border-[#1a1a1a] p-4" >
+      {/* Header */ }
+      < div className = "text-center mb-3" >
           <p className="text-primary font-black text-base tracking-widest">LEVELUP ESPORTS</p>
           <p className="text-gray-600 text-[9px]">Premium Gaming Lounge</p>
-        </div>
+        </div >
         <div className="border-t border-dashed border-[#2a2a2a] my-2" />
 
         <div className="space-y-0.5 text-gray-400 text-[10px] mb-2">
@@ -63,33 +80,35 @@ function BillView({ bill, orderId, sessionId, onPaid, onBack, readOnly }) {
         </div>
         <div className="border-t border-dashed border-[#2a2a2a] my-2" />
 
-        {/* Station charge */}
-        <div className="mb-2">
-          <p className="text-gray-500 text-[9px] uppercase tracking-widest mb-1">Station Charge</p>
-          <div className="flex justify-between text-[10px]">
-            <span className="text-gray-300">{bill.station.label} · {bill.session.plannedDuration}h @ ₹{bill.stationCharge / bill.session.plannedDuration}/hr</span>
-            <span className="text-white">₹{fmt(bill.stationCharge)}</span>
-          </div>
-        </div>
+  {/* Station charge */ }
+  <div className="mb-2">
+    <p className="text-gray-500 text-[9px] uppercase tracking-widest mb-1">Station Charge</p>
+    <div className="flex justify-between text-[10px]">
+      <span className="text-gray-300">{bill.station.label} · {bill.session.plannedDuration}h @ ₹{bill.stationCharge / bill.session.plannedDuration}/hr</span>
+      <span className="text-white">₹{fmt(bill.stationCharge)}</span>
+    </div>
+  </div>
 
-        {/* Food items */}
-        {bill.items.length > 0 && (
-          <div className="mb-2">
-            <p className="text-gray-500 text-[9px] uppercase tracking-widest mb-1">Food & Drinks</p>
-            <div className="space-y-0.5">
-              {bill.items.map((item, i) => (
-                <div key={i} className="flex justify-between text-[10px]">
-                  <span className="text-gray-300">{item.name} × {item.quantity} @ ₹{item.priceAtTime}</span>
-                  <span className="text-white">₹{fmt(item.lineTotal)}</span>
-                </div>
-              ))}
+  {/* Food items */ }
+  {
+    bill.items.length > 0 && (
+      <div className="mb-2">
+        <p className="text-gray-500 text-[9px] uppercase tracking-widest mb-1">Food & Drinks</p>
+        <div className="space-y-0.5">
+          {bill.items.map((item, i) => (
+            <div key={i} className="flex justify-between text-[10px]">
+              <span className="text-gray-300">{item.name} × {item.quantity} @ ₹{item.priceAtTime}</span>
+              <span className="text-white">₹{fmt(item.lineTotal)}</span>
             </div>
-          </div>
-        )}
+          ))}
+        </div>
+      </div>
+    )
+  }
 
-        <div className="border-t border-dashed border-[#2a2a2a] my-2" />
+  <div className="border-t border-dashed border-[#2a2a2a] my-2" />
 
-        {/* Totals */}
+  {/* Totals */ }
         <div className="space-y-0.5 text-[10px]">
           <div className="flex justify-between text-gray-400">
             <span>Food subtotal</span><span>₹{fmt(bill.foodSubtotal)}</span>
@@ -111,10 +130,10 @@ function BillView({ bill, orderId, sessionId, onPaid, onBack, readOnly }) {
         </div>
         <div className="border-t border-dashed border-[#2a2a2a] my-2" />
         <p className="text-center text-gray-700 text-[8px]">Thank you for gaming with us!</p>
-      </div>
+      </div >
 
-      {/* Actions */}
-      <div className="flex gap-2 mt-4">
+    {/* Actions */ }
+    < div className = "flex gap-2 mt-4" >
         {readOnly ? (
           <button onClick={onBack} className="flex-1 py-2.5 rounded-xl text-xs font-bold border border-white/10 text-gray-400 hover:border-white/20 hover:text-white transition-all tracking-widest uppercase">
             Close Bill
@@ -130,8 +149,8 @@ function BillView({ bill, orderId, sessionId, onPaid, onBack, readOnly }) {
             </button>
           </>
         )}
-      </div>
-    </div>
+      </div >
+    </div >
   );
 }
 
@@ -140,12 +159,12 @@ export default function OrderScreen({ session, stationLabel, onClose, onSessionE
   const { id: sessionId, customerName } = session;
 
   const [menuGrouped, setMenuGrouped] = useState({});
-  const [activeCat, setActiveCat]     = useState('drinks');
-  const [order, setOrder]             = useState(null);  // null = not yet loaded
-  const [orderId, setOrderId]         = useState(null);
-  const [loading, setLoading]         = useState({ menu: true, order: true });
-  const [addingId, setAddingId]       = useState(null);
-  const [bill, setBill]               = useState(null);
+  const [activeCat, setActiveCat] = useState('beverages');
+  const [order, setOrder] = useState(null);  // null = not yet loaded
+  const [orderId, setOrderId] = useState(null);
+  const [loading, setLoading] = useState({ menu: true, order: true });
+  const [addingId, setAddingId] = useState(null);
+  const [bill, setBill] = useState(null);
   const [billingLoading, setBillingLoading] = useState(false);
 
   //── Fetch menu once ──
@@ -172,7 +191,7 @@ export default function OrderScreen({ session, stationLabel, onClose, onSessionE
   // ── Ensure order exists when first item is added ──
   async function ensureOrder() {
     if (orderId) return orderId;
-    const res  = await fetch(`${API}/orders/session/${sessionId}`, { method: 'POST', headers: authHeaders() });
+    const res = await fetch(`${API}/orders/session/${sessionId}`, { method: 'POST', headers: authHeaders() });
     const data = await res.json();
     setOrder(data); setOrderId(data.id);
     return data.id;
@@ -224,7 +243,7 @@ export default function OrderScreen({ session, stationLabel, onClose, onSessionE
     return (
       <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
         <div className="absolute inset-0" onClick={onClose} />
-        
+
         <div className="relative w-full max-w-sm bg-[#0f0f0f] border border-[#1a1a1a] rounded-2xl p-5 shadow-2xl flex flex-col max-h-[90vh]">
           {!bill ? (
             <div className="flex flex-col items-center justify-center py-20 gap-3">
@@ -277,13 +296,12 @@ export default function OrderScreen({ session, stationLabel, onClose, onSessionE
             <div className="flex gap-1 px-4 pt-4 pb-3 border-b border-[#1a1a1a]">
               {CATS.map(cat => (
                 <button key={cat} onClick={() => setActiveCat(cat)}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] font-bold tracking-widest uppercase transition-all border ${
-                    activeCat === cat
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] font-bold tracking-widest uppercase transition-all border ${activeCat === cat
                       ? 'bg-primary/10 border-primary/40 text-primary'
                       : 'border-transparent text-gray-500 hover:text-gray-300 hover:border-white/10'
-                  }`}>
+                    }`}>
                   <span className="material-symbols-outlined text-sm">{CAT_ICONS[cat]}</span>
-                  {cat}
+                  {CAT_LABELS[cat]}
                 </button>
               ))}
             </div>
@@ -297,9 +315,8 @@ export default function OrderScreen({ session, stationLabel, onClose, onSessionE
               ) : menuItems.map(item => {
                 const inOrder = qtyMap[item.id];
                 return (
-                  <div key={item.id} className={`flex items-center justify-between px-3 py-2.5 rounded-xl border transition-all ${
-                    item.isAvailable ? 'border-[#1a1a1a] bg-[#0f0f0f] hover:border-[#2a2a2a]' : 'border-white/3 bg-white/2 opacity-40'
-                  }`}>
+                  <div key={item.id} className={`flex items-center justify-between px-3 py-2.5 rounded-xl border transition-all ${item.isAvailable ? 'border-[#1a1a1a] bg-[#0f0f0f] hover:border-[#2a2a2a]' : 'border-white/3 bg-white/2 opacity-40'
+                    }`}>
                     <div>
                       <p className={`text-xs font-bold ${item.isAvailable ? 'text-white' : 'text-gray-600'}`}>{item.name}</p>
                       <p className="text-[10px] text-primary">₹{item.price}</p>
