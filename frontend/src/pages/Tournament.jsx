@@ -1,6 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
+const MockDataBadge = () => (
+  <span className="ml-3 inline-flex items-center gap-1 px-2 py-0.5 rounded border border-gray-600/50 bg-gray-800/50 text-[9px] font-bold uppercase tracking-widest text-gray-400 select-none align-middle backdrop-blur-sm" title="This section uses mock data">
+    <span className="material-symbols-outlined text-[10px]">science</span> MOCK DATA
+  </span>
+);
+
 // ─── DATA ────────────────────────────────────────────────────────────────────
 
 const upcomingTournaments = [
@@ -225,7 +231,7 @@ const generalRules = [
 
 // ─── REGISTRATION MODAL ───────────────────────────────────────────────────────
 
-function RegistrationModal({ tournament, onClose }) {
+function RegistrationModal({ tournament, onClose, onFeatureUnavailable }) {
   const [step, setStep] = useState(1);
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState({ captain: '', email: '', phone: '', team: '', members: '', gameId: '', agree: false });
@@ -244,7 +250,8 @@ function RegistrationModal({ tournament, onClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setSubmitted(true);
+    // setSubmitted(true);
+    if (onFeatureUnavailable) onFeatureUnavailable();
   };
 
   return (
@@ -411,6 +418,15 @@ export default function Tournament() {
   const [selectedTournament, setSelectedTournament] = useState(null);
   const [expandedRules, setExpandedRules] = useState(null);
   const [hofActive, setHofActive] = useState(0);
+  const [comingSoon, setComingSoon] = useState(false);
+
+  useEffect(() => {
+    if (comingSoon) {
+      const timer = setTimeout(() => setComingSoon(false), 3500);
+      return () => clearTimeout(timer);
+    }
+  }, [comingSoon]);
+
   return (
     <main className="relative bg-bg-dark min-h-screen">
 
@@ -486,7 +502,7 @@ export default function Tournament() {
       <section id="upcoming" className="py-20 container mx-auto px-6">
         <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-6 mb-12">
           <div>
-            <h2 className="text-3xl md:text-5xl font-black text-white">THE <span className="text-primary">ARENA</span></h2>
+            <h2 className="text-3xl md:text-5xl font-black text-white">THE <span className="text-primary">ARENA</span> <MockDataBadge /></h2>
             <p className="text-gray-400 mt-2">Browse upcoming events and past tournament records.</p>
           </div>
           <div className="flex rounded-lg overflow-hidden border border-white/10">
@@ -557,7 +573,7 @@ export default function Tournament() {
                       <span className="text-xs text-gray-500">Entry: <span className="text-white font-bold">{t.entryFee}</span></span>
                       <button
                         className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-black uppercase tracking-wider transition-all bg-primary/10 text-primary border border-primary/30 hover:bg-primary hover:text-black"
-                        onClick={(e) => { e.stopPropagation(); setSelectedTournament(t); }}
+                        onClick={(e) => { e.stopPropagation(); setComingSoon(true); }}
                       >
                         <span className="material-symbols-outlined text-sm">how_to_reg</span>
                         Register
@@ -648,7 +664,7 @@ export default function Tournament() {
             <div className="flex flex-col items-center gap-4">
               <p className="text-gray-500 text-sm uppercase tracking-widest">Starts In</p>
               <Countdown targetDate="2026-04-19T18:00:00+05:30" />
-              <button onClick={() => setSelectedTournament(upcomingTournaments[0])}
+              <button onClick={() => setComingSoon(true)}
                 className="mt-2 px-8 py-3 bg-primary text-black font-black rounded-lg hover:bg-[#ffffff] hover:text-[#000000] hover:shadow-[0_0_20px_rgba(13,242,89,0.5)] transition-all text-sm flex items-center gap-2">
                 <span className="material-symbols-outlined text-sm">how_to_reg</span>
                 SECURE YOUR SLOT
@@ -661,7 +677,7 @@ export default function Tournament() {
       {/* ─── BRACKET / FIXTURES ─── */}
       <section className="py-20 container mx-auto px-6">
         <div className="text-center mb-14">
-          <h2 className="text-3xl md:text-5xl font-black text-white mb-3">MATCH <span className="text-primary">BRACKETS</span></h2>
+          <h2 className="text-3xl md:text-5xl font-black text-white mb-3">MATCH <span className="text-primary">BRACKETS</span> <MockDataBadge /></h2>
           <p className="text-gray-400 max-w-xl mx-auto">Live bracket for the Neon Clash Invitational — April 19, 2026. Fixtures update in real-time during the event.</p>
         </div>
 
@@ -759,7 +775,7 @@ export default function Tournament() {
               <span className="material-symbols-outlined text-yellow-400 text-base">auto_awesome</span>
               <span className="text-xs font-black tracking-widest uppercase text-yellow-400">Immortalized</span>
             </div>
-            <h2 className="text-3xl md:text-5xl font-black text-white mb-3">HALL OF <span className="bg-gradient-to-r from-yellow-400 to-amber-500 bg-clip-text text-transparent">FAME</span></h2>
+            <h2 className="text-3xl md:text-5xl font-black text-white mb-3">HALL OF <span className="bg-gradient-to-r from-yellow-400 to-amber-500 bg-clip-text text-transparent">FAME</span> <MockDataBadge /></h2>
             <p className="text-gray-400 max-w-xl mx-auto">The legends who conquered the LevelUp Arena. Every champion, every MVP — carved into history.</p>
           </div>
 
@@ -935,11 +951,12 @@ export default function Tournament() {
           <h2 className="cta-heading text-4xl md:text-6xl font-black text-white mb-4">READY TO <span className="text-primary">DOMINATE</span>?</h2>
           <p className="cta-subtext text-gray-400 mb-10 max-w-xl mx-auto text-lg">Register for an upcoming tournament today. Limited slots are available — secure yours before they're gone.</p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link to="/tournament"
+            <button
+              onClick={() => setComingSoon(true)}
               className="px-10 py-4 bg-primary text-black font-black text-base rounded hover:bg-[#ffffff] hover:text-[#000000] hover:shadow-[0_0_30px_rgba(13,242,89,0.5)] transition-all flex items-center gap-2">
               <span className="material-symbols-outlined">sports_esports</span>
               REGISTER NOW
-            </Link>
+            </button>
             <a href="tel:+915550000263" className="cta-outline-btn px-10 py-4 bg-transparent border border-white/20 text-white font-bold text-base rounded hover:bg-white/5 transition-all flex items-center gap-2">
               <span className="material-symbols-outlined">call</span>
               CALL US
@@ -950,7 +967,25 @@ export default function Tournament() {
 
       {/* Registration Modal */}
       {selectedTournament && (
-        <RegistrationModal tournament={selectedTournament} onClose={() => setSelectedTournament(null)} />
+        <RegistrationModal 
+          tournament={selectedTournament} 
+          onClose={() => setSelectedTournament(null)} 
+          onFeatureUnavailable={() => {
+            setSelectedTournament(null);
+            setComingSoon(true);
+          }}
+        />
+      )}
+
+      {/* Coming Soon Toast */}
+      {comingSoon && (
+        <div className="fixed bottom-10 left-1/2 -translate-x-1/2 z-[200] bg-card-dark border border-primary/30 px-6 py-4 rounded-xl shadow-[0_0_40px_rgba(13,242,89,0.2)] flex items-center gap-3 animate-[slideUp_0.3s_ease-out]">
+          <span className="material-symbols-outlined text-primary">construction</span>
+          <span className="text-white font-bold text-sm whitespace-nowrap">Working on this feature currently. Stay tuned!</span>
+          <button onClick={() => setComingSoon(false)} className="ml-4 text-gray-400 hover:text-white transition-colors">
+            <span className="material-symbols-outlined text-sm">close</span>
+          </button>
+        </div>
       )}
     </main>
   );
