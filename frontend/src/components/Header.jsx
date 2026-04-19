@@ -110,7 +110,7 @@ export default function Header() {
 
       {/* Mobile Drawer */}
       <div
-        className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${mobileOpen ? 'max-h-72 opacity-100' : 'max-h-0 opacity-0'
+        className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${mobileOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
           }`}
       >
         <nav className="flex flex-col px-4 pb-4 pt-2 gap-1 border-t border-white/5 bg-bg-dark/95 backdrop-blur-md">

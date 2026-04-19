@@ -64,7 +64,7 @@ function BillView({ bill, orderId, sessionId, onPaid, onBack, readOnly }) {
       </div >
 
     {/* Bill receipt */ }
-    < div className = "flex-1 overflow-y-auto font-mono text-xs space-y-0 bg-black/40 rounded-xl border border-[#1a1a1a] p-4" >
+    <div className="flex-1 overflow-y-auto font-mono text-xs space-y-0 bg-black/40 rounded-xl border border-[#1a1a1a] p-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
       {/* Header */ }
       < div className = "text-center mb-3" >
           <p className="text-primary font-black text-base tracking-widest">LEVELUP ESPORTS</p>
@@ -175,6 +175,18 @@ export default function OrderScreen({ session, stationLabel, onClose, onSessionE
       .then(data => { setMenuGrouped(data); setLoading(l => ({ ...l, menu: false })); })
       .catch(() => setLoading(l => ({ ...l, menu: false })));
   }, [readOnly]);
+
+  // ── Block body scrolling when modal is open ──
+  useEffect(() => {
+    const originalBody = document.body.style.overflow;
+    const originalHtml = document.documentElement.style.overflow;
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = originalBody;
+      document.documentElement.style.overflow = originalHtml;
+    };
+  }, []);
 
   // ── Fetch / create order ──
   const fetchOrder = useCallback(async () => {
@@ -293,10 +305,10 @@ export default function OrderScreen({ session, stationLabel, onClose, onSessionE
           {/* ── LEFT: Menu ── */}
           <div className="w-1/2 border-r border-[#1a1a1a] flex flex-col overflow-hidden">
             {/* Category tabs */}
-            <div className="flex gap-1 px-4 pt-4 pb-3 border-b border-[#1a1a1a]">
+            <div className="flex overflow-x-auto gap-1 px-4 pt-4 pb-3 border-b border-[#1a1a1a] [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
               {CATS.map(cat => (
                 <button key={cat} onClick={() => setActiveCat(cat)}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] font-bold tracking-widest uppercase transition-all border ${activeCat === cat
+                  className={`flex shrink-0 whitespace-nowrap items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] font-bold tracking-widest uppercase transition-all border ${activeCat === cat
                       ? 'bg-primary/10 border-primary/40 text-primary'
                       : 'border-transparent text-gray-500 hover:text-gray-300 hover:border-white/10'
                     }`}>
@@ -307,7 +319,7 @@ export default function OrderScreen({ session, stationLabel, onClose, onSessionE
             </div>
 
             {/* Items list */}
-            <div className="flex-1 overflow-y-auto px-4 py-3 space-y-2">
+            <div className="flex-1 overflow-y-auto px-4 py-3 space-y-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
               {loading.menu ? (
                 Array.from({ length: 4 }).map((_, i) => <div key={i} className="h-12 rounded-lg bg-[#0f0f0f] animate-pulse" />)
               ) : menuItems.length === 0 ? (
@@ -364,7 +376,7 @@ export default function OrderScreen({ session, stationLabel, onClose, onSessionE
                 </div>
 
                 {/* Items list */}
-                <div className="flex-1 overflow-y-auto space-y-2 mb-4">
+                <div className="flex-1 overflow-y-auto space-y-2 mb-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                   {loading.order ? (
                     Array.from({ length: 3 }).map((_, i) => <div key={i} className="h-10 rounded-lg bg-[#0f0f0f] animate-pulse" />)
                   ) : activeItems.length === 0 ? (

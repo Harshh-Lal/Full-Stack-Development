@@ -157,16 +157,17 @@ export default function About() {
       </section>
 
       <section className="py-20 bg-surface-dark/40">
-        <div className="container mx-auto px-6 grid lg:grid-cols-2 gap-8 items-stretch">
+        <div className="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
+          {/* Founder card */}
           <motion.article
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.6 }}
-            className="rounded-2xl border border-white/10 bg-card-dark/90 p-8"
+            className="rounded-2xl border border-white/10 bg-card-dark/90 p-6 sm:p-8"
           >
             <p className="text-xs uppercase tracking-[0.2em] text-primary font-bold mb-3">Founder / Owner</p>
-            <h2 className="text-3xl font-bold">Harsh Vardhan</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold">Harsh Vardhan</h2>
             <p className="text-secondary text-sm uppercase tracking-[0.18em] mt-2">Owner, Competitive Director</p>
             <p className="mt-6 text-gray-300 leading-relaxed">
               Started from local LAN nights and scaled into a full esports lounge vision. The focus has stayed the same: build a space where casual players feel welcome, and competitive players feel equipped.
@@ -183,20 +184,21 @@ export default function About() {
             </div>
           </motion.article>
 
+          {/* Lounge info card */}
           <motion.article
             initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             className="rounded-2xl border border-white/10 overflow-hidden bg-card-dark"
           >
             <img
               src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1600&q=80"
-              alt="Esports lounge owner with gaming setup"
+              alt="Esports lounge gaming setup"
               loading="lazy"
-              className="w-full h-72 object-cover"
+              className="w-full h-48 sm:h-64 lg:h-72 object-cover"
             />
-            <div className="p-8">
+            <div className="p-6 sm:p-8">
               <h3 className="text-xl font-bold">Lounge Info</h3>
               <p className="mt-4 text-gray-300 leading-relaxed">
                 10 premium RTX 5060 stations, 4K PS5 gaming zone, 10Gbps fiber backbone, and a spectator-first stage area. Equipped with 240Hz Lenovo Legion monitors and Logitech precision gear.
@@ -279,7 +281,7 @@ export default function About() {
         </div>
       </section>
 
-      <section className="py-20 bg-bg-dark">
+      <section className="py-20 bg-bg-dark" id="faq">
         <div className="container mx-auto px-6 max-w-4xl">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}

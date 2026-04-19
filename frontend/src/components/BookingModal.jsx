@@ -121,7 +121,7 @@ export default function BookingModal({ open, onClose }) {
                 </div>
 
                 {/* Content */}
-                <div className="overflow-y-auto flex-1 relative z-10">
+                <div className="overflow-y-auto flex-1 relative z-10 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                     {step === 1 ? (
                         <form onSubmit={handleSubmit} className="p-6 space-y-5">
                             {/* Station Type Selector */}
@@ -166,7 +166,7 @@ export default function BookingModal({ open, onClose }) {
                                 <div>
                                     <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Date</label>
                                     <input required type="date" min={today} value={form.date} onChange={e => setForm(f => ({...f, date: e.target.value}))}
-                                        className="contact-input w-full bg-black/40 border border-white/10 rounded-lg p-3 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" />
+                                        className="date-input contact-input w-full bg-black/40 border border-white/10 rounded-lg p-3 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" />
                                 </div>
                                 <div>
                                     <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Time Slot</label>

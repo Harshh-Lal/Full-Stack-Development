@@ -87,7 +87,7 @@ export default function SessionHistory({ light }) {
         </div>
       )}
 
-      <div className={`rounded-2xl overflow-hidden border ${tc.card}`}>
+      <div className={`rounded-2xl overflow-x-auto border ${tc.card}`}>
         <table className="w-full text-sm">
           <thead>
             <tr className={tc.th}>

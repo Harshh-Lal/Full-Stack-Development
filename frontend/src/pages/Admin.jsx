@@ -308,7 +308,7 @@ function MenuManagement({ light }) {
       </div>
 
       {/* Category tabs */}
-      <div className={`flex items-center gap-1 p-1 rounded-xl border w-fit ${light ? 'bg-gray-100 border-gray-200' : 'bg-[#0f0f0f] border-[#1a1a1a]'}`}>
+      <div className={`flex flex-wrap items-center gap-1 p-1 rounded-xl border w-full md:w-fit ${light ? 'bg-gray-100 border-gray-200' : 'bg-[#0f0f0f] border-[#1a1a1a]'}`}>
         {CATS.map(cat => {
           const c = CAT_COLORS[cat];
           return (
@@ -327,8 +327,8 @@ function MenuManagement({ light }) {
       </div>
 
       {/* Items table */}
-      <div className={`rounded-2xl overflow-hidden border ${tc.card}`}>
-        <table className="w-full text-sm">
+      <div className={`rounded-2xl overflow-x-auto border ${tc.card}`}>
+        <table className="w-full text-sm min-w-[800px]">
           <thead>
             <tr className={tc.th}>
               {['Item', 'Category', 'Price', 'Sort', 'Available', 'Status', 'Remove'].map(h => (
@@ -425,7 +425,7 @@ function MenuManagement({ light }) {
       </div>
 
       {/* GST Card */}
-      <div className={`rounded-xl border p-5 flex items-center justify-between gap-4 ${light ? 'bg-amber-50 border-amber-200' : 'bg-amber-500/5 border-amber-500/20'}`}>
+      <div className={`rounded-xl border p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${light ? 'bg-amber-50 border-amber-200' : 'bg-amber-500/5 border-amber-500/20'}`}>
         <div>
           <p className="text-[10px] font-bold tracking-widest uppercase text-amber-400 mb-0.5">Tax Settings</p>
           <p className={`font-black text-base ${tc.h1}`}>GST Configuration</p>
@@ -668,7 +668,7 @@ function Dashboard({ onLock }) {
         )}
 
         {/* ── TAB SWITCHER ── */}
-        <div className={`flex items-center gap-1 p-1 rounded-xl border w-fit ${light ? 'bg-gray-100 border-gray-200' : 'bg-[#0f0f0f] border-[#1a1a1a]'}`}>
+        <div className={`flex flex-wrap items-center gap-1 p-1 rounded-xl border w-full md:w-fit ${light ? 'bg-gray-100 border-gray-200' : 'bg-[#0f0f0f] border-[#1a1a1a]'}`}>
           {[
             { key: 'bookings', icon: 'table_chart', label: 'Bookings' },
             { key: 'stations', icon: 'grid_view', label: 'Live Stations' },
@@ -691,7 +691,7 @@ function Dashboard({ onLock }) {
 
         {/* Page heading — Bookings tab only */}
         {activeTab === 'bookings' && (
-          <div className="flex items-end justify-between">
+          <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-3 sm:gap-0">
             <div>
               <p className="text-primary text-xs font-bold tracking-[0.3em] uppercase mb-1">Booking Management</p>
               <h2 className={`text-3xl font-black tracking-tight ${t.h1}`}>

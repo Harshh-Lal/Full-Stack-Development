@@ -116,6 +116,22 @@ html.light .contact-input {
   color: #111827 !important;
 }
 
+/* Date input — force white calendar icon */
+.date-input {
+  color-scheme: dark;
+}
+
+.date-input::-webkit-calendar-picker-indicator {
+  filter: invert(1) brightness(10) !important;
+  cursor: pointer;
+  opacity: 0.75;
+  transition: opacity 0.2s;
+}
+
+.date-input::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
+
 /* Glass header */
 .glass {
   background: var(--app-glass-bg);

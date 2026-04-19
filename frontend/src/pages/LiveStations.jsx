@@ -50,11 +50,11 @@ function TimerBadge({ startTime, plannedDuration, compact = false, light = false
     }`}>
       <div className="flex items-center gap-1.5">
         <span className={`material-symbols-outlined text-sm ${isOvertime ? 'text-red-500' : 'text-primary'}`}>timer</span>
-        <span className={`text-[9px] font-bold tracking-widest uppercase ${isOvertime ? 'text-red-500' : 'text-primary'}`}>
+        <span className={`text-[9px] font-bold tracking-widest uppercase hidden xl:inline ${isOvertime ? 'text-red-500' : 'text-primary'}`}>
           {isOvertime ? 'OVERTIME' : 'ELAPSED'}
         </span>
       </div>
-      <span className={`font-mono font-black text-xl tabular-nums tracking-widest ${isOvertime ? 'text-red-500' : 'text-primary'}`}>
+      <span className={`font-mono font-black text-base xl:text-xl tabular-nums tracking-widest ${isOvertime ? 'text-red-500' : 'text-primary'}`}>
         {display}
       </span>
     </div>
@@ -215,7 +215,7 @@ function FloorLayoutView({ pcs, ps5s, cardProps, light }) {
   const dividerClass = light ? 'bg-gray-200' : 'bg-[#1a1a1a]';
   
   return (
-    <div className={`rounded-2xl border ${bgClass} p-6`}>
+    <div className={`rounded-2xl border ${bgClass} p-6 overflow-x-auto`}>
       {/* Room label header */}
       <div className="flex items-center gap-2 mb-1">
         <span className={`text-[9px] font-bold tracking-[0.3em] uppercase ${labelMutedClass}`}>CAFE FLOOR PLAN</span>
@@ -487,7 +487,7 @@ export default function LiveStationsSection({ light }) {
           </div>
 
           {/* View toggle */}
-          <div className={`flex items-center p-0.5 rounded-lg border ${light ? 'border-gray-200 bg-gray-100' : 'border-[#1a1a1a] bg-[#0f0f0f]'}`}>
+          <div className={`hidden sm:flex items-center p-0.5 rounded-lg border ${light ? 'border-gray-200 bg-gray-100' : 'border-[#1a1a1a] bg-[#0f0f0f]'}`}>
             {[
               { key: 'grid',  icon: 'grid_view',     title: 'Grid View' },
               { key: 'floor', icon: 'floor_lamp',    title: 'Floor Layout' },
