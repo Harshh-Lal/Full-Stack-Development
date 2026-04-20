@@ -24,18 +24,33 @@ export default function BookingModal({ open, onClose }) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [bookingId, setBookingId] = useState(null);
+    const [ratesLoading, setRatesLoading] = useState(false);
+    const [ratesError, setRatesError] = useState(false);
 
-    // Fetch real-time rates directly using ExchangeRate-API
+    // Fetch real-time rates using frankfurter.app (free, no API key needed)
+    // Base is INR → gives us how many units of each currency = 1 INR
     useEffect(() => {
         if (!open) return;
-        fetch('https://v6.exchangerate-api.com/v6/fa24c7655db276ed6c858146/latest/INR')
-            .then(r => r.json())
-            .then(data => { 
+        setRatesLoading(true);
+        setRatesError(false);
+        fetch('https://v6.exchangerate-api.com/v6/46b91f38b3d340044756c5d6/latest/INR')
+            .then(r => {
+                if (!r.ok) throw new Error('Network response was not ok');
+                return r.json();
+            })
+            .then(data => {
                 if (data.result === 'success' && data.conversion_rates) {
-                    setRates(data.conversion_rates); 
+                    // conversion_rates already includes INR: 1
+                    setRates(data.conversion_rates);
+                } else {
+                    setRatesError(true);
                 }
             })
-            .catch(() => console.error("Failed to load real-time exchange rates."));
+            .catch(() => {
+                console.error("Failed to load real-time exchange rates.");
+                setRatesError(true);
+            })
+            .finally(() => setRatesLoading(false));
     }, [open]);
 
     // Auto-select first station when type changes
@@ -45,8 +60,13 @@ export default function BookingModal({ open, onClose }) {
 
     const cfg = STATION_CONFIG[form.stationType];
     const priceINR = cfg.pricePerHour * form.durationHours;
-    const rate = rates[form.currency] ?? 1;
-    const displayPrice = form.currency === 'INR' ? priceINR : (priceINR * rate).toFixed(2);
+    const ratesReady = Object.keys(rates).length > 1; // has more than just INR:1
+    const rate = rates[form.currency] ?? null;
+    const displayPrice = form.currency === 'INR'
+        ? priceINR
+        : ratesReady && rate !== null
+            ? (priceINR * rate).toFixed(2)
+            : null;
     const sym = CURRENCY_SYMBOLS[form.currency] || form.currency + ' ';
 
     async function handleSubmit(e) {
@@ -207,8 +227,17 @@ export default function BookingModal({ open, onClose }) {
                             <div className="flex items-center justify-between p-4 rounded-xl bg-primary/5 border border-primary/20">
                                 <div>
                                     <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Total Price</p>
-                                    <p className="text-2xl font-black text-primary">{sym}{displayPrice}</p>
+                                    {ratesLoading && form.currency !== 'INR' ? (
+                                        <p className="text-2xl font-black text-yellow-400 animate-pulse">Loading...</p>
+                                    ) : displayPrice !== null ? (
+                                        <p className="text-2xl font-black text-primary">{sym}{displayPrice}</p>
+                                    ) : (
+                                        <p className="text-2xl font-black text-red-400">₹{priceINR}</p>
+                                    )}
                                     <p className="text-xs text-gray-500 mt-0.5">₹{priceINR} INR · {form.durationHours}h @ ₹{cfg.pricePerHour}/hr</p>
+                                    {ratesError && form.currency !== 'INR' && (
+                                        <p className="text-[10px] text-yellow-500 mt-1">⚠ Live rates unavailable — showing INR</p>
+                                    )}
                                 </div>
                                 <div>
                                     <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Currency</label>
@@ -216,6 +245,9 @@ export default function BookingModal({ open, onClose }) {
                                         className="contact-input bg-black/40 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:border-primary outline-none transition-all">
                                         {CURRENCIES.map(c => <option key={c} value={c}>{c}</option>)}
                                     </select>
+                                    {ratesReady && form.currency !== 'INR' && (
+                                        <p className="text-[10px] text-green-500 mt-1 text-right">✓ Live rate</p>
+                                    )}
                                 </div>
                             </div>
 
